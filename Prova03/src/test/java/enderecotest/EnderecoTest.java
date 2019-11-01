@@ -22,6 +22,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.endereco.Bairro;
+import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.endereco.FixtureEndereco;
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
@@ -34,6 +35,8 @@ public class EnderecoTest {
 	private Bairro bairro;
 
 	private Set<Bairro> bairros;
+	
+	private Cidade cidade;
 
 	private Validator validator;
 
@@ -56,6 +59,7 @@ public class EnderecoTest {
 		bairro = new Bairro();
 		bairro.setBairro("Tatuapé");
 		bairros = new HashSet<>();
+		cidade = new Cidade();
 	}
 
 	public boolean isValid(Endereco endereco, String mensagem) {
@@ -450,6 +454,21 @@ public class EnderecoTest {
 		endereco.setBairro(null);
 		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
 	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_bairro_vazio() {
+		bairro.setBairro("");
+		endereco.setBairro(bairro);
+		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_bairro_com_apenas_com_espacos_em_branco() {
+		bairro.setBairro("       ");
+		endereco.setBairro(bairro);
+		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
+
+	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro_com_caracteres_especiais() {
@@ -492,8 +511,46 @@ public class EnderecoTest {
 	 * */
 
 	@Test
-	public void nao_deve_aceitar_endereco_sem_cidade() {
+	public void nao_deve_aceitar_endereco_com_cidade_nula() {
 		endereco.setCidade(null);
 		assertFalse(isValid(endereco, "Cidade nao pode ser nula"));
 	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_cidade_com_nome_nulo() {
+		cidade.setNomeCidade(null);
+		endereco.setCidade(cidade);
+		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_cidade_com_nome_vazio() {
+		cidade.setNomeCidade("");
+		endereco.setCidade(cidade);
+		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_bairro__com_apenas_com_espacos_em_branco() {
+		cidade.setNomeCidade("                ");
+		endereco.setCidade(cidade);
+		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void deve_aceitar_endereco_com_cidade_valida() {
+		cidade.setNomeCidade("São Paulo");
+		endereco.setCidade(cidade);
+		assertTrue(cidade.getNomeCidade().equals("São Paulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_com_cidade_com_() {
+		
+	}
+	
+	/**
+	 * Testes Endereco
+	 * */
+	
 }
