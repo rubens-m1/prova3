@@ -10,7 +10,7 @@ import br.com.six2six.fixturefactory.Rule;
 
 public class FixtureEndereco {
 
-	public void fakeEndereco() {
+	public static void fakeEndereco() {
 		Fixture.of(Endereco.class).addTemplate("valido", new Rule() {
 			{
 				add("logradouro", regex("[a-zA-Z0-9]{10} [a-zA-Z0-9]{10}"));
@@ -40,7 +40,5 @@ public class FixtureEndereco {
 		Endereco endereco = Fixture.from(Endereco.class).gimme("valido");
 		System.out.println(endereco);
 		System.out.println("");
-
 	}
-
 }

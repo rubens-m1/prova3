@@ -4,7 +4,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +52,7 @@ public class CidadeTest {
 	@BeforeClass
 	public static void init() {
 		FixtureCidade.criarCidade();
+		
 	}
 
 	@Before

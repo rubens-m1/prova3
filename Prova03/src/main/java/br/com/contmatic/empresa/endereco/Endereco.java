@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -13,30 +14,42 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Endereco {
+import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
-	@NotBlank
-	@Length
+public class Endereco {
+	
+	@Pattern(regexp = ExpressoesRegulares.ALFANUMERICO_COM_ESPAÇO_Ç_E_ACENTOS, message = "Caractere invalido")
+	@NotBlank(message = "Logradouro nao pode conter apenas espacos, estar vazio ou nulo")
+	@Size(min = 4, max = 200, message = "Logradouro deve conter de 5 a 200 caracteres")
 	private String logradouro;
 
-	@NotNull(message = "numero nao pode ser nulo")
-	@Min(value = 0, message = "numero nao pode ser menor que 0")
-	@Max(value = 999999, message = "numero nao pode ser maior que 999999")
+	@NotBlank(message = "Numero nao pode conter apenas espacos, estar vazio ou nulo")
+	@Min(value = 0, message = "Numero nao pode ser menor que 0")
+	@Max(value = 999999, message = "Numero nao pode ser maior que 999999")
 	private String numero;
 
-	@NotBlank(message = "cep nao pode conter apenas espacos, estar vazio ou nulo")
-	@Size(min = 8, max = 8, message = "cep fora do tamanho")
+	@NotBlank(message = "Cep nao pode conter apenas espacos, estar vazio ou nulo")
+	@Min(value = 01001000, message = "Cep invalido")
+	@Max(value = 99999999, message = "Cep invalido")
+	@Size(min = 8, max = 8, message = "Cep deve conter 8 digitos")
 	// @Pattern(regexp = ExpressoesRegulares.CEP, message = "cep invalido")
 	private String cep;
 
-	@Size
+	@Size(max = 100, message = "Logradouro deve conter no maximo 100 caracteres")
 	private String complemento;
 
 	@Valid
+	@NotNull(message = "Tipo de Endereco nao pode ser nulo")
 	private TIPODEENDERECO tipo;
 	
+	//@NotBlank(message = "Bairro nao pode conter apenas espacos, estar vazio ou nulo")
+	@Valid
+	@NotNull(message = "Bairro nao pode ser nulo")
 	private Bairro bairro;
 	
+	//@NotBlank(message = "Cidade nao pode conter apenas espacos, estar vazia ou nula")
+	@Valid
+	@NotNull(message = "Cidade nao pode ser nula")
 	private Cidade cidade;
 	
 
