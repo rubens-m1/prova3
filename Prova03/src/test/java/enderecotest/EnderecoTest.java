@@ -1,5 +1,6 @@
 package enderecotest;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -21,6 +22,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.code.beanmatchers.BeanMatchers;
+
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
@@ -31,6 +34,8 @@ import br.com.six2six.fixturefactory.Fixture;
 public class EnderecoTest {
 
 	private Endereco endereco;
+	
+	private Endereco endereco2;
 
 	private Bairro bairro;
 
@@ -46,8 +51,6 @@ public class EnderecoTest {
 
 	private Integer n;
 
-	// private Bairro bairro;
-
 	@BeforeClass
 	public static void init() {
 		FixtureEndereco.fakeEndereco();
@@ -56,6 +59,7 @@ public class EnderecoTest {
 	@Before
 	public void init2() {
 		endereco = Fixture.from(Endereco.class).gimme("valido");
+		endereco2 = Fixture.from(Endereco.class).gimme("valido");
 		bairro = new Bairro();
 		bairro.setBairro("Tatuapé");
 		bairros = new HashSet<>();
@@ -546,11 +550,53 @@ public class EnderecoTest {
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_cidade_com_() {
-		
+		fail();
 	}
 	
 	/**
 	 * Testes Endereco
 	 * */
+	
+	@Test
+	public void deve_acertar_que_enderecos_iguais_tem_o_mesmo_hash_code() {
+		endereco2 = endereco;
+		assertTrue(endereco.hashCode() == endereco2.hashCode());
+	}
+	
+	@Test
+	public void nao_deve_aceitar_que_enderecos_iguais_tenham_hashcodes_diferentes() {
+		endereco2 = endereco;
+		assertFalse(endereco.hashCode() != endereco2.hashCode());
+	}
+	
+	@Test
+	public void deve_acertar_que_enderecos_diferentes_tenham_hashcodes_diferentes() {
+		assertTrue(endereco.hashCode() != endereco2.hashCode());
+	}
+	
+	@Test
+	public void nao_deve_aceitar_que_enderecos_diferentes_tenham_hashcodes_iguais() {
+		assertFalse(endereco.hashCode() == endereco2.hashCode());
+	}
+	
+	@Test
+	public void deve_fazer_to_string_de_endereco() {
+		System.out.println(endereco.toString());
+	}
+	
+	@Test
+	public void deve_respeitar_os_gets_sets() {
+		assertThat(Endereco.class, hasValidGettersAndSetters());
+	}
+
+	@Test
+	public void deve_respeitar_hash_code() {
+		assertThat(Endereco.class, BeanMatchers.hasValidBeanHashCode());
+	}
+
+	@Test
+	public void deve_respeitar_equals() {
+		assertThat(Endereco.class, BeanMatchers.hasValidBeanEquals());
+	}
 	
 }

@@ -1,9 +1,10 @@
-package br.com.contmatic.empresa.funcionarios;
+package br.com.contmatic.empresa.funcionario;
 
 import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,41 +16,48 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.LocalDate;
 
+import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.telefone.Telefone;
+import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
 public class Funcionario{
 
-	@CPF
-	@NotBlank
+	@CPF(message = "CPF invalido")
+	@NotBlank(message = "CPF nao pode conter apenas espacos, estar vazio ou nulo")
+	@Size(min = 11, max = 11, message = "O CPF deve conter exatamente 11 digitos")
 	private String cpf;
 
-	@NotBlank
-	@Size
+	@NotBlank(message = "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo")
+	@Size(min = 1, max = 50, message = "O campo primeiro nome deve conter de 1 a 50 caracteres")
+	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_Ç_E_ACENTOS, message = "O campo deve conter somente letras")
 	private String primeiroNome;
 
-	@NotBlank
-	@Size
+	@NotBlank(message = "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo")
+	@Size(min = 1, max = 50, message = "O campo sobrenome nome deve conter de 1 a 50 caracteres")
+	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo sobrenome deve conter somente letras e espacos")
 	private String sobrenome;
 
 	// FAZER RESTRIÇÃO DE IDADE
+	//@NotBlank(message = "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo")
 	private LocalDate dataDeNascimento;
 
-	@NotBlank
-	@Size
+	@NotBlank(message = "Cargo nao pode conter apenas espacos, estar vazio ou nulo")
+	@Size(min = 2, max = 50, message = "O campo cargo nome deve conter de 2 a 50 caracteres")
+	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo cargo deve conter somente letras e espacos")
 	private String cargo;
 
 	// PENSAR
 	private String salario;
 
-	@Valid
-	private EnderecoDoFuncionario enderecoFuncionario;
+//	@Valid
+	private Endereco endereco;
 
 	
-	@Valid
-	@NotNull
+//	@Valid
+//	@NotNull
 	private Set<Telefone> telefone;
 
-	@Email
+//	@Email
 	private String email;
 
 	public String getCpf() {
@@ -99,13 +107,13 @@ public class Funcionario{
 	public void setSalario(String salario) {
 		this.salario = salario;
 	}
-
-	public void setEnderecoFuncionario(EnderecoDoFuncionario enderecoFuncionario) {
-		this.enderecoFuncionario = enderecoFuncionario;
-	}
 	
-	public EnderecoDoFuncionario getEnderecoFuncionario() {
-		return enderecoFuncionario;
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public Set<Telefone> getTelefone() {
@@ -148,6 +156,5 @@ public class Funcionario{
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}
-
 
 }

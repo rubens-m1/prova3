@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.joda.time.LocalDate;
 
 import br.com.contmatic.empresa.endereco.Endereco;
-import br.com.contmatic.empresa.funcionarios.Funcionario;
+import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
 
 public class Empresa {

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
 
-import br.com.contmatic.empresa.funcionarios.Funcionario;
+import br.com.contmatic.empresa.funcionario.Funcionario;
 
 public class EmailsEmpresa {
 

@@ -4,6 +4,8 @@ public final class ExpressoesRegulares {
 	
 	public static final String ALFABETO_COM_ESPACO_Ç_E_ACENTOS = "([a-zA-Z][ç][ ][áéíóúÁÉÍÓÚàÀãõÃÕâêôÂÊÔ])*";
 	
+	public static final String ALFABETO_COM_Ç_E_ACENTOS = "([a-zA-Z][ç][áéíóúÁÉÍÓÚàÀãõÃÕâêôÂÊÔ])*";
+	
 	public static final String ALFANUMERICO_COM_ESPAÇO_Ç_E_ACENTOS = "([a-zA-Z][0-9][ç][ ][áéíóúÁÉÍÓÚàÀãõÃÕâêôÂÊÔ])*";
 	
 	public static final String CEP = "[^00000000][0-9]{5}-[0-9]{3}";

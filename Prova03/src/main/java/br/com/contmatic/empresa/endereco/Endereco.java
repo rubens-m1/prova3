@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
 public class Endereco {
-	
+
 	@Pattern(regexp = ExpressoesRegulares.ALFANUMERICO_COM_ESPAÇO_Ç_E_ACENTOS, message = "Caractere invalido")
 	@NotBlank(message = "Logradouro nao pode conter apenas espacos, estar vazio ou nulo")
 	@Size(min = 4, max = 200, message = "Logradouro deve conter de 5 a 200 caracteres")
@@ -41,17 +41,18 @@ public class Endereco {
 	@Valid
 	@NotNull(message = "Tipo de Endereco nao pode ser nulo")
 	private TIPODEENDERECO tipo;
-	
-	//@NotBlank(message = "Bairro nao pode conter apenas espacos, estar vazio ou nulo")
+
+	// @NotBlank(message = "Bairro nao pode conter apenas espacos, estar vazio ou
+	// nulo")
 	@Valid
 	@NotNull(message = "Bairro nao pode ser nulo")
 	private Bairro bairro;
-	
-	//@NotBlank(message = "Cidade nao pode conter apenas espacos, estar vazia ou nula")
+
+	// @NotBlank(message = "Cidade nao pode conter apenas espacos, estar vazia ou
+	// nula")
 	@Valid
 	@NotNull(message = "Cidade nao pode ser nula")
 	private Cidade cidade;
-	
 
 	public String getLogradouro() {
 		return logradouro;
@@ -92,7 +93,7 @@ public class Endereco {
 	public void setTipo(TIPODEENDERECO tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public Bairro getBairro() {
 		return bairro;
 	}
@@ -123,15 +124,13 @@ public class Endereco {
 		}
 
 		Endereco endereco = (Endereco) obj;
-		return new EqualsBuilder().append(numero, endereco.getNumero()).append(cep, endereco.getCep())
-				.append(complemento, endereco.getComplemento()).append(tipo, endereco.getComplemento()).isEquals();
+		return new EqualsBuilder().append(numero, endereco.getNumero()).append(cep, endereco.getCep()).isEquals();
 	}
 
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumero()).append(getCep()).append(getComplemento()).append(getTipo())
-				.hashCode();
+		return new HashCodeBuilder().append(getNumero()).append(getCep()).hashCode();
 	}
-	
+
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}

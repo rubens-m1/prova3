@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa.funcionarios;
+package br.com.contmatic.empresa.funcionario;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
