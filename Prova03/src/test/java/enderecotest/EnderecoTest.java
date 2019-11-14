@@ -123,7 +123,8 @@ public class EnderecoTest {
 
 	@Test
 	public void deve_acertar_o_numero_de_caracteres_do_logradouro() {
-		fail();
+		endereco.setLogradouro("Rua abc");
+		assertThat(endereco.getLogradouro().length(), is(7));
 	}
 
 	@Test
@@ -249,18 +250,14 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_aceitar_endereco_com_cep_valido() {
-		endereco.setCep("04055041");
-		assertTrue(endereco.getCep().equals("04055041"));
+		endereco.setCep("55555555");
+		assertTrue(endereco.getCep().equals("55555555"));
 	}
 	
 	@Test
 	public void deve_aceitar_endereco_com_cep_valido_comecado_com_0() {
-		fail();
-	}
-
-	@Test
-	public void deve_aceitar_endereco_com_cep_valido_comecado_com_numeros_diferentes_de_0() {
-		fail();
+		endereco.setCep("05555555");
+		assertTrue(endereco.getCep().equals("05555555"));
 	}
 	
 	@Test

@@ -324,6 +324,16 @@ public class FuncionarioTest {
 		fail();
 	}
 	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_no_futuro() {
+		
+	}
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_menos_de_16_anos() {
+		
+	}
+	
 	/**
 	 * Testes de Cargo
 	 * */
@@ -411,7 +421,6 @@ public class FuncionarioTest {
 		funcionario.setCargo("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB");
 		assertFalse(isValid(funcionario, "O campo cargo nome deve conter de 2 a 50 caracteres"));
 	}
-	
 	
 	/**
 	 * Testes de Salario
