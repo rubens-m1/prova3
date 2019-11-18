@@ -107,15 +107,6 @@ public class EnderecoTest {
 	}
 
 	@Test
-	public void deve_acertar_valor_minimo_de_caracteres_em_logradouro_nao_e_diferente() {
-		endereco.setLogradouro("1234");
-		assertNotEquals(String.valueOf(endereco.getLogradouro().length()), is(4));
-		fail();
-		// assertnot
-		// assertThat(String.valueOf(endereco.getLogradouro()).length(), is);
-	}
-
-	@Test
 	public void deve_aceitar_valor_minimo_de_caracteres_em_logradouro() {
 		endereco.setLogradouro("av a");
 		assertTrue(endereco.getLogradouro().equals("av a"));
@@ -196,7 +187,7 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_numero_nulo() {
 		endereco.setNumero(null);
-		assertFalse(isValid(endereco, "Numero nao pode ser nulo"));
+		assertFalse(isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
@@ -509,7 +500,7 @@ public class EnderecoTest {
 	
 	/**
 	 * Testes de Cidade
-	 * */
+	 **/
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cidade_nula() {
@@ -546,8 +537,17 @@ public class EnderecoTest {
 	}
 	
 	@Test
-	public void nao_deve_aceitar_endereco_com_cidade_com_() {
-		fail();
+	public void nao_deve_aceitar_endereco_com_cidade_com_numeros() {
+		cidade.setNomeCidade("São Paulo 123");
+		endereco.setCidade(cidade);
+		assertFalse(isValid(endereco, "Caractere invalido"));
+	}
+	
+	@Test
+	public void deve_aceitar_endereco_com_cidade_com_minimo_de_caracteres() {
+		cidade.setNomeCidade("A");
+		endereco.setCidade(cidade);
+		assertTrue(cidade.getNomeCidade().equals("A"));
 	}
 	
 	/**

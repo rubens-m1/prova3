@@ -1,11 +1,13 @@
 package funcionariotest;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -18,13 +20,27 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.code.beanmatchers.BeanMatchers;
+
+import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
+import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
 
 public class FuncionarioTest {
 	
 	private Funcionario funcionario;
+	
+	private Funcionario funcionario2;
+	
+	private Endereco endereco;
+	
+	private Telefone telefone;
+	
+	private Telefone telefone1;
+	
+	private Set<Telefone> telefones;
 	
 	private Validator validator;
 
@@ -38,6 +54,9 @@ public class FuncionarioTest {
 	@Before
 	public void init2() {	
 		funcionario = Fixture.from(Funcionario.class).gimme("valido");
+		funcionario2 = Fixture.from(Funcionario.class).gimme("valido");
+		endereco = Fixture.from(Endereco.class).gimme("valido");
+		telefone = Fixture.from(Telefone.class).gimme("valido");
 	}
 	
 	public boolean isValid(Funcionario funcionario, String mensagem) {
@@ -57,7 +76,7 @@ public class FuncionarioTest {
 	
 	/**
 	 * Testes de CPF
-	 * */
+	 **/
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cpf_nulo() {
@@ -428,17 +447,39 @@ public class FuncionarioTest {
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_nulo() {
-		
+		funcionario.setSalario(null);
+		assertFalse(isValid(funcionario, "Salario nao pode ser nulo"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_salario_vazio() {
-		
+	public void deve_aceitar_funcionario_com_salario_valido() {
+		funcionario.setSalario(2000.00);
+		assertThat(funcionario.getSalario(), is(2000.00));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_salario_em_branco() {
-		
+	public void deve_aceitar_funcionario_com_salario_minimo() {
+		funcionario.setSalario(998.00);
+		assertThat(funcionario.getSalario(), is(998.00));
+	}
+
+	
+	@Test
+	public void deve_aceitar_funcionario_com_salario_maximo() {
+		funcionario.setSalario(999999999.00);
+		assertThat(funcionario.getSalario(), is(999999999.00));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_salario_menor_que_o_salario_minimo() {
+		funcionario.setSalario(997.00);
+		assertFalse(isValid(funcionario, "O valor do salario deve ser maior ou igual a 998"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_salario_maior_que_o_salario_maximo() {
+		funcionario.setSalario(1000000000.00);
+		assertFalse(isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
 	}
 	
 	/**
@@ -447,36 +488,157 @@ public class FuncionarioTest {
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_endereco_nulo() {
-		
+		funcionario.setEndereco(null);
+		assertFalse(isValid(funcionario, "Endereco nao pode ser nulo"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_endereco_vazio() {
-		
-	}
-	
-	@Test
-	public void nao_deve_aceitar_funcionario_com_endereco_em_branco() {
-		
+	public void deve_aceitar_funcionario_com_endereco_valido() {
+		funcionario.setEndereco(endereco);
+		assertThat(funcionario.getEndereco(), is(endereco));
 	}
 	
 	/**
 	 * Testes de Telefone
-	 * */
+	 **/
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_telefone_nulo() {
-		
+		funcionario.setTelefone(null);
+		assertFalse(isValid(funcionario, "Telefone nao pode ser nulo"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_telefone_vazio() {
-		
+	public void deve_aceitar_funcionario_com_telefone_valido() {
+		telefones = new HashSet<>();
+		telefones.add(telefone);
+		funcionario.setTelefone(telefones);
+		assertTrue(funcionario.getTelefone().equals(telefones));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_telefone_em_branco() {
-		
+	public void deve_aceitar_funcionario_com_mais_de_um_telefone() {
+		telefones = new HashSet<>();
+		telefone1 = Fixture.from(Telefone.class).gimme("valido");
+		telefones.add(telefone);
+		telefones.add(telefone1);
+		funcionario.setTelefone(telefones);
+		assertTrue(funcionario.getTelefone().equals(telefones));
 	}
+	
+	/**
+	 * Testes de email
+	 **/
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_nulo() {
+		funcionario.setEmail(null);
+		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_vazio() {
+		funcionario.setEmail("");
+		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_em_branco() {
+		funcionario.setEmail("        ");
+		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+	}
+	
+	@Test
+	public void deve_aceitar_funcionario_com_email_valido() {
+		funcionario.setEmail("email@empresa.com");
+		assertTrue(funcionario.getEmail().equals("email@empresa.com"));
+	}
+
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_invalido_sem_arroba() {
+		funcionario.setEmail("funcionario.123.com.br");
+		assertFalse(isValid(funcionario, "E-mail invalido"));
+
+	}
+
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_invalido_com_espaco() {
+		funcionario.setEmail("funcionario @123.com");
+		assertFalse(isValid(funcionario, "E-mail invalido"));
+	}
+
+	@Test
+	public void nao_deve_aceitar_funcionario_com_email_invalido_com_espaco_e_sem_arroba() {
+		funcionario.setEmail("funcionario .123.com");
+		assertFalse(isValid(funcionario, "E-mail invalido"));
+	}
+
+	@Test
+	public void nao_deve_aceitar_email_invalido_com_espaco_e_com_mais_de_um_arroba() {
+		funcionario.setEmail("funcionario @@123.com");
+		assertFalse(isValid(funcionario, "E-mail invalido"));
+	}
+
+	@Test
+	public void nao_deve_aceitar_email_com_mais_de_um_arroba() {
+		funcionario.setEmail("aa@@.com.br");
+		assertFalse(isValid(funcionario, "E-mail invalido"));
+	}
+	
+	/**
+	 * Testes de Funcionario
+	 **/
+	
+	@Test
+	public void deve_acertar_que_funcionarios_iguais_tem_o_mesmo_hash_code() {
+		funcionario2 = funcionario;
+		assertTrue(funcionario.hashCode() == funcionario2.hashCode());
+	}
+	
+	@Test
+	public void nao_deve_aceitar_que_funcionarios_iguais_tenham_hashcodes_diferentes() {
+		funcionario2 = funcionario;
+		assertFalse(funcionario.hashCode() != funcionario2.hashCode());
+	}
+	
+	@Test
+	public void deve_acertar_que_funcionarios_diferentes_tenham_hashcodes_diferentes() {
+		funcionario.setCpf("22187618072");
+		assertTrue(funcionario.hashCode() != funcionario2.hashCode());
+	}
+	
+	@Test
+	public void nao_deve_aceitar_que_funcionarios_diferentes_tenham_hashcodes_iguais() {
+		funcionario.setCpf("22187618072");
+		assertFalse(funcionario.hashCode() == funcionario2.hashCode());
+	}
+	
+	@Test
+	public void deve_fazer_to_string_de_funcionario() {
+		System.out.println(funcionario.toString());
+	}
+	
+	@Test
+	public void deve_respeitar_os_gets_sets() {
+		assertThat(Funcionario.class, hasValidGettersAndSetters());
+	}
+
+	@Test
+	public void deve_respeitar_hash_code() {
+		assertThat(Funcionario.class, BeanMatchers.hasValidBeanHashCode());
+	}
+
+	@Test
+	public void deve_respeitar_equals() {
+		assertThat(Funcionario.class, BeanMatchers.hasValidBeanEquals());
+	}
+	
+//	public void gerarData() {
+//		registerValueGenerator(new ValueGenerator<DateTime>() {
+//			public DateTime generate() {
+//				return new DateTime(new Random().nextLong()).withMillisOfSecond(0);
+//			}
+//		}, DateTime.class);
+//	}
 
 }

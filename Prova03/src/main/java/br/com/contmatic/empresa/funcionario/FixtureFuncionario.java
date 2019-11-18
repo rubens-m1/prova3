@@ -23,12 +23,12 @@ public class FixtureFuncionario {
 		Fixture.of(Funcionario.class).addTemplate("valido", new Rule() {
 			{
 		
-			add("cpf","90546150012");
+			add("cpf",random("90546150012", "73883228095"));
 			add("primeiroNome",random("João", "Felipe","Maria","Fernanda"));
 			add("sobrenome",random("Silva", "Ferreira","Cruz","Barros"));
 			add("dataDeNascimento", new org.joda.time.LocalDate(RandomUtils.nextInt(1900, 2003), RandomUtils.nextInt(1, 12), RandomUtils.nextInt(1, 28)));
 			add("cargo","Programador(a)");
-			add("salario","R$ 5000,00");
+			add("salario","5000.00");
 			add("endereco",one(Endereco.class, "valido"));
 			add("telefone", has(1).of(Telefone.class, "valido"));
 			add("email","funcionario@empresa.com");
