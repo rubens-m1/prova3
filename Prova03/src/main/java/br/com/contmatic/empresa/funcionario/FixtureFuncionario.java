@@ -30,10 +30,10 @@ public class FixtureFuncionario {
 			add("cargo","Programador(a)");
 			add("salario","5000.00");
 			add("endereco",one(Endereco.class, "valido"));
-			add("telefone", has(1).of(Telefone.class, "valido"));
+			add("telefone", has(3).of(Telefone.class, "valido"));
 			add("email","funcionario@empresa.com");
 		}
-		
+	
 	});
 		
 		Fixture.of(Endereco.class).addTemplate("valido", new Rule() {

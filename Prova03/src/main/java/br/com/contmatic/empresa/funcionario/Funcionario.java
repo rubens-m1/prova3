@@ -13,7 +13,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.LocalDate;
@@ -39,9 +38,7 @@ public class Funcionario{
 	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo sobrenome deve conter somente letras e espacos")
 	private String sobrenome;
 
-	//FAZER RESTRIÇÃO DE IDADE
-	//@NotBlank(message = "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo")
-	//Fazer restrição das duas datas de fevereiro
+	@NotNull(message = "Data de nascimento nao pode ser nula")
 	private LocalDate dataDeNascimento;
 
 	@NotBlank(message = "Cargo nao pode conter apenas espacos, estar vazio ou nulo")
@@ -64,7 +61,7 @@ public class Funcionario{
 	private Set<Telefone> telefone;
 
 	@NotBlank(message = "E-mail nao pode conter apenas espacos, estar vazio ou nulo")
-	@Pattern(regexp = ExpressoesRegulares.FORMATACAO_EMAIL_SIMPLES, message = "E-mail invalido")
+	@Pattern(regexp = ExpressoesRegulares.FORMATACAO_EMAIL_SIMPLES, message = "E-mail invalido ()")
 	private String email;
 
 	public String getCpf() {

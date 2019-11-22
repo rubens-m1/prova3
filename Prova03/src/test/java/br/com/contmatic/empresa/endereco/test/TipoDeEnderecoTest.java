@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.endereco.test;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,9 +18,9 @@ import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 
 public class TipoDeEnderecoTest {
 	
-	public Validator validator;
+	private Validator validator;
 
-	public ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	
 	public boolean isValid(TIPODEENDERECO tipodeendereco, String mensagem) {
 		validator = factory.getValidator();

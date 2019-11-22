@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.endereco.test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;

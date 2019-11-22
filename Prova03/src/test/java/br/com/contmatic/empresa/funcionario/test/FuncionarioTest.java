@@ -1,11 +1,11 @@
-package funcionariotest;
+package br.com.contmatic.empresa.funcionario.test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +18,7 @@ import javax.validation.ValidatorFactory;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.code.beanmatchers.BeanMatchers;
@@ -26,6 +27,7 @@ import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
+import br.com.contmatic.empresa.util.test.*;
 import br.com.six2six.fixturefactory.Fixture;
 
 public class FuncionarioTest {
@@ -43,6 +45,8 @@ public class FuncionarioTest {
 	private Set<Telefone> telefones;
 	
 	private Validator validator;
+	
+	private LocalDate dataDeNascimento;
 
 	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	
@@ -57,23 +61,15 @@ public class FuncionarioTest {
 		funcionario2 = Fixture.from(Funcionario.class).gimme("valido");
 		endereco = Fixture.from(Endereco.class).gimme("valido");
 		telefone = Fixture.from(Telefone.class).gimme("valido");
-	}
-	
-	public boolean isValid(Funcionario funcionario, String mensagem) {
-		validator = factory.getValidator();
-		boolean valido = true;
-		Set<ConstraintViolation<Funcionario>> restricoes = validator.validate(funcionario);
-		for (ConstraintViolation<Funcionario> constraintViolation : restricoes)
-			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
-				valido = false;
-		return valido;
+		dataDeNascimento = new LocalDate(2003, 01, 01);
+		
 	}
 
 	@Test
 	public void deve_aceitar_funcionario_valido() {
 		System.out.println(funcionario);
 	}
-	
+
 	/**
 	 * Testes de CPF
 	 **/
@@ -328,29 +324,14 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_nula() {
 		funcionario.setDataDeNascimento(null);
-		assertFalse(isValid(funcionario, "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo"));
-	}
-	
-	@Test
-	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_vazia() {
-		funcionario.setDataDeNascimento(new LocalDate());
 		System.out.println(funcionario.getDataDeNascimento());
-		fail();
+		assertFalse(isValid(funcionario, "Data de nascimento nao pode ser nula"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_em_branco() {
-		fail();
-	}
-	
-	@Test
-	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_no_futuro() {
-		
-	}
-	
-	@Test
-	public void nao_deve_aceitar_funcionario_com_menos_de_16_anos() {
-		
+	public void deve_aceitar_funcionario_com_data_valida() {
+		funcionario.setDataDeNascimento(dataDeNascimento);
+		assertTrue(funcionario.getDataDeNascimento().equals(dataDeNascimento));
 	}
 	
 	/**
@@ -374,7 +355,7 @@ public class FuncionarioTest {
 		funcionario.setCargo("        ");
 		assertFalse(isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
-	
+
 	@Test
 	public void deve_aceitar_funcionario_com_cargo_valido() {
 		funcionario.setCargo("Analista");
@@ -386,7 +367,7 @@ public class FuncionarioTest {
 		funcionario.setCargo("Analista Pleno");
 		assertTrue(funcionario.getCargo().equals("Analista Pleno"));
 	}
-	
+
 	@Test
 	public void deve_aceitar_funcionario_com_cargo_valido_com_espacos_e_acento() {
 		funcionario.setCargo("Analista Sênior");
@@ -460,7 +441,7 @@ public class FuncionarioTest {
 	@Test
 	public void deve_aceitar_funcionario_com_salario_minimo() {
 		funcionario.setSalario(998.00);
-		assertThat(funcionario.getSalario(), is(998.00));
+		assertTrue(funcionario.getSalario().equals(998.00));
 	}
 
 	
@@ -481,7 +462,7 @@ public class FuncionarioTest {
 		funcionario.setSalario(1000000000.00);
 		assertFalse(isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
 	}
-	
+
 	/**
 	 * Testes de Endereco
 	 * */
@@ -489,6 +470,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_endereco_nulo() {
 		funcionario.setEndereco(null);
+		assertNotNull(endereco);
 		assertFalse(isValid(funcionario, "Endereco nao pode ser nulo"));
 	}
 	
@@ -523,6 +505,8 @@ public class FuncionarioTest {
 		telefones.add(telefone);
 		telefones.add(telefone1);
 		funcionario.setTelefone(telefones);
+		System.out.println(telefones);
+		System.out.println(funcionario);
 		assertTrue(funcionario.getTelefone().equals(telefones));
 	}
 	
@@ -620,6 +604,7 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_respeitar_os_gets_sets() {
+		funcionario.setDataDeNascimento(new LocalDate(01/01/2000));
 		assertThat(Funcionario.class, hasValidGettersAndSetters());
 	}
 
@@ -634,11 +619,19 @@ public class FuncionarioTest {
 	}
 	
 //	public void gerarData() {
-//		registerValueGenerator(new ValueGenerator<DateTime>() {
-//			public DateTime generate() {
-//				return new DateTime(new Random().nextLong()).withMillisOfSecond(0);
+//		registerValueGenerator(new ValueGenerator<LocalDate>() {
+//			public LocalDate generate() {
+//				return new LocalDate(new Random().nextLong());
 //			}
-//		}, DateTime.class);
+//		}, LocalDate.class);
+//	}
+//
+//	private void registerValueGenerator(ValueGenerator<LocalDate> valueGenerator, Class<LocalDate> class1) {
+//		registerValueGenerator(new ValueGenerator<LocalDate>() {
+//			public LocalDate generate() {
+//				return new LocalDate(new Random().nextLong());
+//			}
+//		}, LocalDate.class);
 //	}
 
 }

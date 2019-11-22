@@ -1,4 +1,4 @@
-package telefonetest;
+package br.com.contmatic.empresa.telefone.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -123,7 +123,7 @@ public class TipoDeTelefoneTest {
 		comercial.setNumero("98765-4321");
 		assertTrue(isValid(comercial, "98765-4321"));
 	}
-	
+
 	@Test
 	public void deve_aceitar_telefone_correto_fixo() {
 		fixo.setNumero("55555555");

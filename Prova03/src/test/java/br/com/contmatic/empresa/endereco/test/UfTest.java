@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.endereco.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;

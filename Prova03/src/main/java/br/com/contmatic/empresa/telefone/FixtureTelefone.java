@@ -10,6 +10,7 @@ public class FixtureTelefone {
 	public static void fakeTelefone() {
 
 		Fixture.of(Telefone.class).addTemplate("valido", new Rule() {{
+			add("tipo", TIPODETELEFONE.values()[new Random().nextInt(TIPODETELEFONE.values().length -1)]);
 			add("ddd", DDD.values()[new Random().nextInt(DDD.values().length - 1)]);
 			add("numero", regex("([1-9][0-9]{8})"));
 			add("ramal", regex("\\d{7}"));
@@ -18,6 +19,6 @@ public class FixtureTelefone {
 		Telefone telefone = Fixture.from(Telefone.class).gimme("valido");
 		System.out.println(telefone);
 		System.out.println("");
-		
+
 	}
 }

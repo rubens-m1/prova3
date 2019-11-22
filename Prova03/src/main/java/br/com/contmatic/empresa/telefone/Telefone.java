@@ -13,7 +13,13 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
+
 public class Telefone {
+	
+	@Valid
+	@NotNull(message = "Tipo de Endereco nao pode ser nulo")
+	private TIPODETELEFONE tipo;
 
 	@NotNull(message = "ddd nao pode ser nulo, vazio ou conter somente espaços")
 	@Valid
@@ -28,16 +34,22 @@ public class Telefone {
 	@Min(value = 0, message = "ramal nao pode ser menor que 0")
 	private String ramal;
 
-	public Telefone(DDD ddd, String numero, String ramal) {
-		super();
+	public Telefone(TIPODETELEFONE tipo, DDD ddd, String numero, String ramal) {
+		this.tipo = tipo;
 		this.ddd = ddd;
 		this.numero = numero;
 		this.ramal = ramal;
-
 	}
 
 	public Telefone() {
-		super();
+	}
+	
+	public TIPODETELEFONE getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TIPODETELEFONE tipo) {
+		this.tipo = tipo;
 	}
 
 	public DDD getDdd() {

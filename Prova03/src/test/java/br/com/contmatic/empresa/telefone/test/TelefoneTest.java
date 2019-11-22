@@ -1,4 +1,4 @@
-package telefonetest;
+package br.com.contmatic.empresa.telefone.test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Random;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -22,7 +21,6 @@ import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.FixtureTelefone;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
 
 public class TelefoneTest {
 

@@ -1,6 +1,5 @@
-package br.com.contmatic.empresa.util;
+package br.com.contmatic.empresa.util.test;
 
-import java.util.Random;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -8,16 +7,14 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import org.joda.time.DateTime;
-
 import br.com.contmatic.empresa.Empresa;
 
 public class MetodosUteis {
 	
-	public Validator validator;
+	private Validator validator;
 
-	public ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		
+	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+			
 	public boolean isValid(Empresa empresa, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -28,6 +25,14 @@ public class MetodosUteis {
 			}
 		return valido;
 	}
+	
+//	public void gerarData() {
+//		registerValueGenerator(new ValueGenerator<LocalDate>() {
+//			public LocalDate generate() {
+//				return new LocalDate(new Random().nextLong());
+//			}
+//		}, LocalDate.class);
+//	}
 	
 //	public void gerarData() {
 //		registerValueGenerator(new ValueGenerator<DateTime>() {
