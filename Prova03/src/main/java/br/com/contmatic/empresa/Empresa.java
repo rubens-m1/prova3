@@ -21,6 +21,8 @@ import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Empresa {
 
 	// size?
@@ -76,6 +78,7 @@ public class Empresa {
 	}
 
 	public void setCnpj(String cnpj) {
+		checkNotNull(cnpj, "CNPJ nao pode ser nulo"); 
 		this.cnpj = cnpj;
 	}
 
@@ -84,6 +87,7 @@ public class Empresa {
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
+		checkNotNull(razaoSocial, "Razao Social nao pode ser nula"); 
 		this.razaoSocial = razaoSocial;
 	}
 
