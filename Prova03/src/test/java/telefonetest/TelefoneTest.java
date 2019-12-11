@@ -62,8 +62,8 @@ public class TelefoneTest {
 	public void deve_aceitar_ddd_valido_esperado() {
 		telefone.setDdd(DDD.DDD11);
 		assertTrue(telefone.getDdd().equals(DDD.DDD11));
-	}
-	
+	} 
+
 	@Test
 	public void nao_deve_aceitar_ddd_valido_diferente_do_esperado() {
 		telefone.setDdd(DDD.DDD11);

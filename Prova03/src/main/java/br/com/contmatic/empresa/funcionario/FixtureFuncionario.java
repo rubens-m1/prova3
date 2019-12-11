@@ -33,7 +33,7 @@ public class FixtureFuncionario {
 			add("telefone", has(1).of(Telefone.class, "valido"));
 			add("email","funcionario@empresa.com");
 		}
-		
+	
 	});
 		
 		Fixture.of(Endereco.class).addTemplate("valido", new Rule() {
