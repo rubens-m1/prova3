@@ -3,6 +3,8 @@ package br.com.contmatic.empresa.funcionario;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -11,7 +13,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.LocalDate;
@@ -37,8 +38,8 @@ public class Funcionario{
 	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo sobrenome deve conter somente letras e espacos")
 	private String sobrenome;
 
-	// FAZER RESTRIÇÃO DE IDADE
-	//@NotBlank(message = "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo")
+
+	@NotBlank(message = "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo")
 	private LocalDate dataDeNascimento;
 
 	@NotBlank(message = "Cargo nao pode conter apenas espacos, estar vazio ou nulo")
@@ -46,18 +47,22 @@ public class Funcionario{
 	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo cargo deve conter somente letras e espacos")
 	private String cargo;
 
-	// PENSAR
-	private String salario;
+	@NotNull(message = "Salario nao pode ser nulo")
+	@Min(value = 998, message = "O valor do salario deve ser maior ou igual a 998")
+	@Max(value = 999999999, message = "O valor do salario deve ser menor ou igual a 999999999")
+	private Double salario;
 
-//	@Valid
+	@Valid
+	@NotNull(message = "Endereco nao pode ser nulo")
 	private Endereco endereco;
 
 	
-//	@Valid
-//	@NotNull
+	@Valid
+	@NotNull(message = "Telefone nao pode ser nulo")
 	private Set<Telefone> telefone;
 
-//	@Email
+	@NotBlank(message = "E-mail nao pode conter apenas espacos, estar vazio ou nulo")
+	@Pattern(regexp = ExpressoesRegulares.FORMATACAO_EMAIL_SIMPLES, message = "E-mail invalido")
 	private String email;
 
 	public String getCpf() {
@@ -99,12 +104,12 @@ public class Funcionario{
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-
-	public String getSalario() {
+	
+	public Double getSalario() {
 		return salario;
 	}
 
-	public void setSalario(String salario) {
+	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
 	

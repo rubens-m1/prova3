@@ -15,9 +15,11 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.DDD;
+import br.com.contmatic.empresa.telefone.FixtureTelefone;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
@@ -30,20 +32,14 @@ public class TelefoneTest {
 	
 	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
+	@BeforeClass
+	public static void init() {
+		FixtureTelefone.fakeTelefone();
+	}
+	
 	@Before
-	public void init() {
-
-		telefone = new Telefone();
-		System.out.println("");
-		Fixture.of(Telefone.class).addTemplate("valido", new Rule() {{
-			add("ddd", DDD.values()[new Random().nextInt(DDD.values().length - 1)]);
-			add("numero", regex("\\d{8,9}"));
-			add("ramal", regex("\\d{7}"));
-		}});
-		
-		Telefone telefone = Fixture.from(Telefone.class).gimme("valido");
-		System.out.println(telefone);
-
+	public void init2() {
+		telefone = Fixture.from(Telefone.class).gimme("valido");
 	}
 	
 	public boolean isValid(Telefone telefone, String mensagem) {
@@ -209,10 +205,10 @@ public class TelefoneTest {
 	}
 	
 	
-	@Test
-	public void deve_imprimir_tostring() {
-		System.out.println(telefone.toString());
-	}
+//	@Test
+//	public void deve_imprimir_tostring() {
+//		System.out.println(telefone.toString());
+//	}
 	
 	@Test
 	public void deve_respeitar_os_gets_sets() {

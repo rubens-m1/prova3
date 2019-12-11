@@ -32,7 +32,7 @@ public class Endereco {
 	@Min(value = 01001000, message = "Cep invalido")
 	@Max(value = 99999999, message = "Cep invalido")
 	@Size(min = 8, max = 8, message = "Cep deve conter 8 digitos")
-	// @Pattern(regexp = ExpressoesRegulares.CEP, message = "cep invalido")
+	@Pattern(regexp = ExpressoesRegulares.CEP, message = "Formato de cep invalido")
 	private String cep;
 
 	@Size(max = 100, message = "Logradouro deve conter no maximo 100 caracteres")
