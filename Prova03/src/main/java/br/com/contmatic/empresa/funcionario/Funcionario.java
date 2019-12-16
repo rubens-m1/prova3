@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -38,8 +39,8 @@ public class Funcionario{
 	@Pattern(regexp = ExpressoesRegulares.ALFABETO_COM_ESPACO_Ç_E_ACENTOS, message = "O campo sobrenome deve conter somente letras e espacos")
 	private String sobrenome;
 
-
-	@NotBlank(message = "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo")
+	@NotNull(message = "Data de nascimento não pode ser nula")
+	@Past(message = "Data de nascimento não pode ser no futuro")
 	private LocalDate dataDeNascimento;
 
 	@NotBlank(message = "Cargo nao pode conter apenas espacos, estar vazio ou nulo")

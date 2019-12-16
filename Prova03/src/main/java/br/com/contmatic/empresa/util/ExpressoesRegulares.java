@@ -16,4 +16,7 @@ public final class ExpressoesRegulares {
 	
 	public static final String FORMATACAO_EMAIL_SIMPLES = "[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]{2,3}";
 	
+	public static final String FORMATACAO_URL = "\"^(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$\"";
+
+	
 }

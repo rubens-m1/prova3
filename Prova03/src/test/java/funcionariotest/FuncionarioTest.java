@@ -1,34 +1,28 @@
 package funcionariotest;
 
-import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.LocalTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.code.beanmatchers.BeanMatchers;
+import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
+import util.Utilidades;
 
 public class FuncionarioTest {
 	
@@ -42,14 +36,11 @@ public class FuncionarioTest {
 	
 	private Telefone telefone1;
 	
-	private Set<Telefone> telefones;
-	
-	private Validator validator;
-
-	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	private Set<Telefone> telefones;	
 	
 	@BeforeClass
 	public static void init() {
+		Utilidades.reconhecerJodaTime();
 		FixtureFuncionario.fakeFuncionario();
 	}
 	
@@ -59,16 +50,6 @@ public class FuncionarioTest {
 		funcionario2 = Fixture.from(Funcionario.class).gimme("valido");
 		endereco = Fixture.from(Endereco.class).gimme("valido");
 		telefone = Fixture.from(Telefone.class).gimme("valido");
-	}
-	
-	public boolean isValid(Funcionario funcionario, String mensagem) {
-		validator = factory.getValidator();
-		boolean valido = true;
-		Set<ConstraintViolation<Funcionario>> restricoes = validator.validate(funcionario);
-		for (ConstraintViolation<Funcionario> constraintViolation : restricoes)
-			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
-				valido = false;
-		return valido;
 	}
 
 	@Test
@@ -83,25 +64,25 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cpf_nulo() {
 		funcionario.setCpf(null);
-		assertFalse(isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cpf_vazio() {
 		funcionario.setCpf("");
-		assertFalse(isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cpf_em_branco() {
 		funcionario.setCpf("             ");
-		assertFalse(isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void deve_aceitar_cpf_valido() {
 		funcionario.setCpf("27975838098");
-		assertTrue(isValid(funcionario, "27975838098"));
+		assertTrue(Utilidades.isValid(funcionario, "27975838098"));
 	}
 	
 	@Test
@@ -113,37 +94,37 @@ public class FuncionarioTest {
 	@Test
 	public void deve_aceitar_cpf_valido_com_pontos_e_tracos_1() {
 		funcionario.setCpf("279.758.380-98");
-		assertTrue(isValid(funcionario, "279.758.380-98"));
+		assertTrue(Utilidades.isValid(funcionario, "279.758.380-98"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_invalido() {
 		funcionario.setCpf("27975838091");
-		assertFalse(isValid(funcionario, "CPF invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF invalido"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_com_numeros_e_letras() {
 		funcionario.setCpf("2797583809a");
-		assertFalse(isValid(funcionario, "CPF invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF invalido"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_so_com_letras() {
 		funcionario.setCpf("aaaaaaaaaaa");
-		assertFalse(isValid(funcionario, "CPF invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF invalido"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_com_numeros_e_caracteres_especiais() {
 		funcionario.setCpf("2797583809!");
-		assertFalse(isValid(funcionario, "CPF invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF invalido"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_so_com_caracteres_especiais() {
 		funcionario.setCpf("!@#$%¨&*()_+");
-		assertFalse(isValid(funcionario, "CPF invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "CPF invalido"));
 	}
 	
 	@Test
@@ -155,13 +136,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_cpf_com_menos_de_onze_digitos() {
 		funcionario.setCpf("2797583809");
-		assertFalse(isValid(funcionario, "O CPF deve conter exatamente 11 digitos"));
+		assertFalse(Utilidades.isValid(funcionario, "O CPF deve conter exatamente 11 digitos"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cpf_com_mais_de_onze_digitos() {
 		funcionario.setCpf("279758380981");
-		assertFalse(isValid(funcionario, "O CPF deve conter exatamente 11 digitos"));
+		assertFalse(Utilidades.isValid(funcionario, "O CPF deve conter exatamente 11 digitos"));
 	}
 	
 	/**
@@ -171,19 +152,19 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_nome_nulo() {
 		funcionario.setPrimeiroNome(null);
-		assertFalse(isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_nome_vazio() {
 		funcionario.setPrimeiroNome("");
-		assertFalse(isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_nome_em_branco() {
 		funcionario.setPrimeiroNome("               ");
-		assertFalse(isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Primeiro Nome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -195,13 +176,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_primeiro_nome_com_numeros() {
 		funcionario.setPrimeiroNome("Paulo123");
-		assertFalse(isValid(funcionario, "O campo deve conter somente letras"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo deve conter somente letras"));
 	}
 	
 	@Test
 	public void nao_deve_acetar_primeiro_nome_com_caracteres_especiais() {
 		funcionario.setPrimeiroNome("Maria!@#$");
-		assertFalse(isValid(funcionario, "O campo deve conter somente letras"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo deve conter somente letras"));
 	}
 	
 	@Test
@@ -234,13 +215,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_primeiro_nome_maior_que_o_comprimento_maximo() {
 		funcionario.setPrimeiroNome("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		assertFalse(isValid(funcionario, "O campo primeiro nome deve conter de 1 a 50 caracteres"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo primeiro nome deve conter de 1 a 50 caracteres"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_primeiro_nome_com_espacos() {
 		funcionario.setPrimeiroNome("Ana Paula");
-		assertFalse(isValid(funcionario, "O campo deve conter somente letras"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo deve conter somente letras"));
 	}
 	
 	/**
@@ -250,19 +231,19 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_sobrenome_nulo() {
 		funcionario.setSobrenome(null);
-		assertFalse(isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_sobrenome_vazio() {
 		funcionario.setSobrenome("");
-		assertFalse(isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_sobrenome_em_branco() {
 		funcionario.setSobrenome("        ");
-		assertFalse(isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Sobrenome nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -274,13 +255,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_sobrenome_com_numeros() {
 		funcionario.setSobrenome("Paula123");
-		assertFalse(isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
 	}
 	
 	@Test
 	public void nao_deve_acetar_sobrenome_com_caracteres_especiais() {
 		funcionario.setSobrenome("Maria!@#$");
-		assertFalse(isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
 	}
 	
 	@Test
@@ -288,7 +269,6 @@ public class FuncionarioTest {
 		funcionario.setSobrenome("A");
 		assertTrue(funcionario.getSobrenome().equals("A"));
 	}
-	
 	
 	@Test
 	public void deve_acertar_o_comprimento_minimo_do_sobrenome() {
@@ -313,7 +293,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_sobrenome_maior_que_o_comprimento_maximo() {
 		funcionario.setSobrenome("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		assertFalse(isValid(funcionario, "O campo sobrenome nome deve conter de 1 a 50 caracteres"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo sobrenome nome deve conter de 1 a 50 caracteres"));
 	}
 	
 	@Test
@@ -322,7 +302,6 @@ public class FuncionarioTest {
 		assertTrue(funcionario.getSobrenome().equals("de Paula"));
 	}
 	
-	
 	/**
 	 * Testes de Data de Nascimento
 	 * */
@@ -330,39 +309,18 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_nula() {
 		funcionario.setDataDeNascimento(null);
-		assertFalse(isValid(funcionario, "Data de nascimento nao pode conter apenas espacos, estar vazio ou nulo"));
-	}
-	
-	@Test
-	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_vazia() {
-		funcionario.setDataDeNascimento(new LocalDate());
-		System.out.println(funcionario.getDataDeNascimento());
-		fail();
+		assertFalse(Utilidades.isValid(funcionario, "Data de nascimento não pode ser nula"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_data_de_nascimento_no_futuro() {
-		funcionario.setDataDeNascimento(new LocalDate(2019,12,12));
-		System.out.println(funcionario.getDataDeNascimento());
+		funcionario.setDataDeNascimento(new LocalDate(2056,12,12));
+		assertFalse(Utilidades.isValid(funcionario, "Data de nascimento não pode ser no futuro"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_funcionario_com_menos_de_16_anos() {
-		
-	}
-	
-	
-//
-	boolean isValidDate(String dateToValidate){
-	    String pattern = "yyyy-MM-dd";
-
-	    try {
-	        DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-	        fmt.parseDateTime(dateToValidate);
-	    } catch (Exception e) {
-	        return false;
-	    }
-	    return true;
+	public void deve_aceitar_funcionario_com_data_de_nascimento_valida() {
+		assertTrue(Utilidades.isValid(funcionario, "Data de nascimento não pode ser no futuro"));
 	}
 	
 	/**
@@ -372,19 +330,19 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cargo_nulo() {
 		funcionario.setCargo(null);
-		assertFalse(isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cargo_vazio() {
 		funcionario.setCargo("");
-		assertFalse(isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_cargo_em_branco() {
 		funcionario.setCargo("        ");
-		assertFalse(isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Cargo nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -408,13 +366,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_cargo_com_caracteres_especiais() {
 		funcionario.setCargo("Analista!@#$");
-		assertFalse(isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo sobrenome deve conter somente letras e espacos"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cargo_com_numeros() {
 		funcionario.setCargo("Tecnico123");
-		assertFalse(isValid(funcionario, "O campo cargo deve conter somente letras e espacos"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo cargo deve conter somente letras e espacos"));
 	}
 	
 	@Test
@@ -432,7 +390,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_cargo_com_a_quantidade_de_caracteres_menor_que_a_minima() {
 		funcionario.setCargo("a");
-		assertFalse(isValid(funcionario, "O campo cargo nome deve conter de 2 a 50 caracteres"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo cargo nome deve conter de 2 a 50 caracteres"));
 	}
 	
 	@Test
@@ -450,7 +408,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_cargo_com_a_quantidade_de_caracteres_maior_que_a_maxima() {
 		funcionario.setCargo("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB");
-		assertFalse(isValid(funcionario, "O campo cargo nome deve conter de 2 a 50 caracteres"));
+		assertFalse(Utilidades.isValid(funcionario, "O campo cargo nome deve conter de 2 a 50 caracteres"));
 	}
 	
 	/**
@@ -460,7 +418,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_nulo() {
 		funcionario.setSalario(null);
-		assertFalse(isValid(funcionario, "Salario nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Salario nao pode ser nulo"));
 	}
 	
 	@Test
@@ -485,13 +443,13 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_menor_que_o_salario_minimo() {
 		funcionario.setSalario(997.00);
-		assertFalse(isValid(funcionario, "O valor do salario deve ser maior ou igual a 998"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser maior ou igual a 998"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_maior_que_o_salario_maximo() {
 		funcionario.setSalario(1000000000.00);
-		assertFalse(isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
 	}
 	
 	/**
@@ -501,7 +459,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_endereco_nulo() {
 		funcionario.setEndereco(null);
-		assertFalse(isValid(funcionario, "Endereco nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Endereco nao pode ser nulo"));
 	}
 	
 	@Test
@@ -517,7 +475,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_telefone_nulo() {
 		funcionario.setTelefone(null);
-		assertFalse(isValid(funcionario, "Telefone nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "Telefone nao pode ser nulo"));
 	}
 	
 	@Test
@@ -545,19 +503,19 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_nulo() {
 		funcionario.setEmail(null);
-		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_vazio() {
 		funcionario.setEmail("");
-		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_em_branco() {
 		funcionario.setEmail("        ");
-		assertFalse(isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -569,32 +527,32 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_invalido_sem_arroba() {
 		funcionario.setEmail("funcionario.123.com.br");
-		assertFalse(isValid(funcionario, "E-mail invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail invalido"));
 
 	}
 
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_invalido_com_espaco() {
 		funcionario.setEmail("funcionario @123.com");
-		assertFalse(isValid(funcionario, "E-mail invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_funcionario_com_email_invalido_com_espaco_e_sem_arroba() {
 		funcionario.setEmail("funcionario .123.com");
-		assertFalse(isValid(funcionario, "E-mail invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_email_invalido_com_espaco_e_com_mais_de_um_arroba() {
 		funcionario.setEmail("funcionario @@123.com");
-		assertFalse(isValid(funcionario, "E-mail invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_email_com_mais_de_um_arroba() {
 		funcionario.setEmail("aa@@.com.br");
-		assertFalse(isValid(funcionario, "E-mail invalido"));
+		assertFalse(Utilidades.isValid(funcionario, "E-mail invalido"));
 	}
 	
 	/**
@@ -632,7 +590,7 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_respeitar_os_gets_sets() {
-		assertThat(Funcionario.class, hasValidGettersAndSetters());
+		assertThat(Funcionario.class, BeanMatchers.hasValidGettersAndSetters());
 	}
 
 	@Test
@@ -645,12 +603,6 @@ public class FuncionarioTest {
 		assertThat(Funcionario.class, BeanMatchers.hasValidBeanEquals());
 	}
 	
-//	public void gerarData() {
-//		registerValueGenerator(new ValueGenerator<DateTime>() {
-//			public DateTime generate() {
-//				return new DateTime(new Random().nextLong()).withMillisOfSecond(0);
-//			}
-//		}, DateTime.class);
-//	}
+
 
 }

@@ -1,7 +1,6 @@
 package br.com.contmatic.empresa.funcionario;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
 
 import java.util.Random;
 

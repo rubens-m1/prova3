@@ -33,6 +33,10 @@ public class EmailsEmpresa {
 		return area;
 	}
 
+	public EmailsEmpresa() {
+		super();
+	}
+
 	public EmailsEmpresa(Funcionario funcionario, String area, String email) {
 		super();
 		this.funcionario = funcionario;

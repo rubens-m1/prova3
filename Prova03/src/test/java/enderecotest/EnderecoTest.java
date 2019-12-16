@@ -4,19 +4,12 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -30,6 +23,7 @@ import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.endereco.FixtureEndereco;
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 import br.com.six2six.fixturefactory.Fixture;
+import util.Utilidades;
 
 public class EnderecoTest {
 
@@ -42,10 +36,6 @@ public class EnderecoTest {
 	private Set<Bairro> bairros;
 	
 	private Cidade cidade;
-
-	private Validator validator;
-
-	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
 	private String quantidadeMaxima;
 
@@ -64,16 +54,6 @@ public class EnderecoTest {
 		bairro.setBairro("Tatuapé");
 		bairros = new HashSet<>();
 		cidade = new Cidade();
-	}
-
-	public boolean isValid(Endereco endereco, String mensagem) {
-		validator = factory.getValidator();
-		boolean valido = true;
-		Set<ConstraintViolation<Endereco>> restricoes = validator.validate(endereco);
-		for (ConstraintViolation<Endereco> constraintViolation : restricoes)
-			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
-				valido = false;
-		return valido;
 	}
 
 	@Test
@@ -97,7 +77,7 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_endereco_sem_logradouro() {
 		endereco.setLogradouro(null);
 		System.out.println(endereco);
-		assertFalse(isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
@@ -121,7 +101,7 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_valor_menor_que_o_minimo_de_caracteres_em_logradouro() {
 		endereco.setLogradouro("123");
-		assertFalse(isValid(endereco, "Logradouro deve conter de 5 a 200 caracteres"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro deve conter de 5 a 200 caracteres"));
 	}
 
 	@Test
@@ -135,37 +115,37 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_valor_maior_que_o_maximo_de_caracteres_em_logradouro() {
 		quantidadeMaxima = new String(randomAlphanumeric(201));
 		endereco.setLogradouro(quantidadeMaxima);
-		assertFalse(isValid(endereco, "Logradouro deve conter de 5 a 200 caracteres"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro deve conter de 5 a 200 caracteres"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_logradouro_somente_espacos() {
 		endereco.setLogradouro("                               ");
-		assertFalse(isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_logradouro_vazio() {
 		endereco.setLogradouro("");
-		assertFalse(isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_caracteres_especiais() {
 		endereco.setLogradouro("!@#$%");
-		assertFalse(isValid(endereco, "Caractere invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Caractere invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_logradouro_com_caracteres_especiais() {
 		endereco.setLogradouro("rua 123 !@#$");
-		assertFalse(isValid(endereco, "Caractere invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Caractere invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_logradouro_com_caracteres_especiais_com_numeros() {
 		endereco.setLogradouro("!@#123");
-		assertFalse(isValid(endereco, "Caractere invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Caractere invalido"));
 	}
 
 	@Test
@@ -187,32 +167,32 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_numero_nulo() {
 		endereco.setNumero(null);
-		assertFalse(isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_numero_vazio() {
 		endereco.setNumero("");
-		assertFalse(isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_numero_contendo_apenas_espacos_em_branco() {
 		endereco.setNumero("              ");
-		assertFalse(isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_numero_menor_que_0() {
 		n = (int) (-1 * (Math.random() * 2147483647));
 		endereco.setNumero(String.valueOf(n));
-		assertFalse(isValid(endereco, "Numero nao pode ser menor que 0"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode ser menor que 0"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_numero_minimo_de_integer_pois_e_negativo() {
 		endereco.setNumero(String.valueOf(-2147483648));
-		assertFalse(isValid(endereco, "Numero nao pode ser menor que 0"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode ser menor que 0"));
 	}
 
 	@Test
@@ -226,13 +206,13 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_endereco_com_numero_maior_que_999999() {
 		n = (int) ((Math.random() * 2146483648) + 999999);
 		endereco.setNumero(String.valueOf(n));
-		assertFalse(isValid(endereco, "Numero nao pode ser maior que 999999"));
+		assertFalse(Utilidades.isValid(endereco, "Numero nao pode ser maior que 999999"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_numero_maximo_de_integer_2147483647() {
 		endereco.setNumero(String.valueOf(2147483647));
-		assertFalse(isValid(endereco, "numero nao pode ser maior que 999999"));
+		assertFalse(Utilidades.isValid(endereco, "numero nao pode ser maior que 999999"));
 	}
 
 	/**
@@ -254,19 +234,19 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_nulo() {
 		endereco.setCep(null);
-		assertFalse(isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_vazio() {
 		endereco.setCep("");
-		assertFalse(isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_contendo_apenas_espacos_em_branco() {
 		endereco.setCep("              ");
-		assertFalse(isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Cep nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 
@@ -279,39 +259,37 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_menor_que_01001000_com_0_a_esquerda() {
 		endereco.setCep("00000001");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void deve_aceitar_endereco_com_o_maior_cep_99999999() {
 		endereco.setCep("99999999");
-		assertTrue(isValid(endereco, "99999999"));
+		assertTrue(Utilidades.isValid(endereco, "99999999"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_maior_que_99999999() {
 		endereco.setCep("100000000");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
-	
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_com_menos_que_8_digitos() {
 		endereco.setCep("1234567");
-		assertFalse(isValid(endereco, "Cep deve conter 8 digitos"));
+		assertFalse(Utilidades.isValid(endereco, "Cep deve conter 8 digitos"));
 	}
-	
 
 	@Test
 	public void nao_deve_aceitar_endereco_cep_com_mais_que_8_digitos() {
 		endereco.setCep("123456789");
-		assertFalse(isValid(endereco, "Cep deve conter 8 digitos"));
+		assertFalse(Utilidades.isValid(endereco, "Cep deve conter 8 digitos"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_cep_nao_com_mais_de_oito_digitos_mesmo_com_zeros_na_frente() {
 		endereco.setCep("012345678");
-		assertFalse(isValid(endereco, "Cep deve conter 8 digitos"));
+		assertFalse(Utilidades.isValid(endereco, "Cep deve conter 8 digitos"));
 	}
 
 	@Test
@@ -323,43 +301,43 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_com_letras() {
 		endereco.setCep("a1234567");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_so_letras() {
 		endereco.setCep("abcdefgh");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_cep_com_caractere_especial_caso_com_7_numeros_e_8_caracteres() {
 		endereco.setCep("#1234567");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_com_caractere_especial_caso_com_8_numeros_e_9_caracteres() {
 		endereco.setCep("#12345678");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_so_com_caracteres_especiais() {
 		endereco.setCep("!@#$%Â¨&*");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_cep_negativo_com_a_quantidade_de_digitos_certo() {
 		endereco.setCep("-12345678");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_cep_negativo_com_a_quantidade_de_digitos_incorreta() {
 		endereco.setCep("-1234567");
-		assertFalse(isValid(endereco, "Cep invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Cep invalido"));
 	}
 
 	/**
@@ -412,7 +390,7 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_endereco_com_complemento_maior_que_o_tamanho_maximo() {
 		endereco.setComplemento(randomAlphanumeric(101));
 		System.out.println(endereco.getComplemento());
-		assertFalse(isValid(endereco, "Logradouro deve conter no maximo 100 caracteres"));
+		assertFalse(Utilidades.isValid(endereco, "Logradouro deve conter no maximo 100 caracteres"));
 	}
 	
 	/**
@@ -422,7 +400,7 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_sem_tipo() {
 		endereco.setTipo(null);
-		assertFalse(isValid(endereco, "Tipo de Endereco nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Tipo de Endereco nao pode ser nulo"));
 	}
 	
 	@Test
@@ -444,22 +422,21 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_sem_bairro() {
 		endereco.setBairro(null);
-		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Bairro nao pode ser nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro_vazio() {
 		bairro.setBairro("");
 		endereco.setBairro(bairro);
-		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Bairro nao pode ser nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro_com_apenas_com_espacos_em_branco() {
 		bairro.setBairro("       ");
 		endereco.setBairro(bairro);
-		assertFalse(isValid(endereco, "Bairro nao pode ser nulo"));
-
+		assertFalse(Utilidades.isValid(endereco, "Bairro nao pode ser nulo"));
 	}
 
 	@Test
@@ -467,28 +444,28 @@ public class EnderecoTest {
 		bairro.setBairro("!@#$%");
 		endereco.setBairro(bairro);
 		System.out.println(endereco.getBairro());
-		assertFalse(isValid(endereco, "Nome de bairro invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Nome de bairro invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro_com_caracteres_especiais_e_letras() {
 		bairro.setBairro("São Judas !@#$%Â¨&*");
 		endereco.setBairro(bairro);
-		assertFalse(isValid(endereco, "Nome de bairro invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Nome de bairro invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro_com_caracteres_especiais_com_numeros() {
 		bairro.setBairro("1234 !@#$%Â¨&*");
 		endereco.setBairro(bairro);
-		assertFalse(isValid(endereco, "Nome de bairro invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Nome de bairro invalido"));
 	}
 
 	@Test
 	public void nao_deve_aceitar_enderec_com_bairro_com_caracteres_especiais_letras_e_numeros() {
 		bairro.setBairro("bairro 123 !@#$%Â¨&*");
 		endereco.setBairro(bairro);
-		assertFalse(isValid(endereco, "Nome de bairro invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Nome de bairro invalido"));
 	}
 
 	@Test
@@ -505,28 +482,28 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_cidade_nula() {
 		endereco.setCidade(null);
-		assertFalse(isValid(endereco, "Cidade nao pode ser nula"));
+		assertFalse(Utilidades.isValid(endereco, "Cidade nao pode ser nula"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_cidade_com_nome_nulo() {
 		cidade.setNomeCidade(null);
 		endereco.setCidade(cidade);
-		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_cidade_com_nome_vazio() {
 		cidade.setNomeCidade("");
 		endereco.setCidade(cidade);
-		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
 	public void nao_deve_aceitar_endereco_com_bairro__com_apenas_com_espacos_em_branco() {
 		cidade.setNomeCidade("                ");
 		endereco.setCidade(cidade);
-		assertFalse(isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
+		assertFalse(Utilidades.isValid(endereco, "Nome da cidade nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -540,7 +517,7 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_endereco_com_cidade_com_numeros() {
 		cidade.setNomeCidade("São Paulo 123");
 		endereco.setCidade(cidade);
-		assertFalse(isValid(endereco, "Caractere invalido"));
+		assertFalse(Utilidades.isValid(endereco, "Caractere invalido"));
 	}
 	
 	@Test
@@ -586,14 +563,14 @@ public class EnderecoTest {
 		assertThat(Endereco.class, hasValidGettersAndSetters());
 	}
 
-	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Endereco.class, BeanMatchers.hasValidBeanHashCode());
-	}
+//	@Test
+//	public void deve_respeitar_hash_code() {
+//		assertThat(Endereco.class, BeanMatchers.hasValidBeanHashCode());
+//	}
 
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Endereco.class, BeanMatchers.hasValidBeanEquals());
-	}
-	
+//	@Test
+//	public void deve_respeitar_equals() {
+//		assertThat(Endereco.class, BeanMatchers.hasValidBeanEquals());
+//	}
+//	
 }

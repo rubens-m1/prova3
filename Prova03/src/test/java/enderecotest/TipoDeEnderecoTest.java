@@ -3,35 +3,12 @@ package enderecotest;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.junit.Test;
 
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 
 public class TipoDeEnderecoTest {
-	
-	public Validator validator;
-
-	public ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-	
-	public boolean isValid(TIPODEENDERECO tipodeendereco, String mensagem) {
-		validator = factory.getValidator();
-		boolean valido = true;
-		Set<ConstraintViolation<TIPODEENDERECO>> restricoes = validator.validate(tipodeendereco);
-		for (ConstraintViolation<TIPODEENDERECO> constraintViolation : restricoes)
-			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem)) {
-				valido = false;
-			}
-		return valido;
-	}
 
 	@Test
 	public void deve_aceitar_tipo_residencial_valido() {
@@ -45,13 +22,13 @@ public class TipoDeEnderecoTest {
 		assertNotEquals(TIPODEENDERECO.ENDERECOCOMERCIAL.name(), residencial.name());
 	}
 	
-	@Test
-	public void nao_deve_aceitar_tipo_residencial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
-	}
+//	@Test
+//	public void nao_deve_aceitar_tipo_residencial_nulo() {
+//		fail();
+////		TIPODEENDERECO residencial = null;
+////		residencial.setTipo(null);
+////		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
+//	}
 	
 	@Test
 	public void deve_acertar_que_o_tipo_residencial_e_diferente_de_nulo() {
@@ -71,13 +48,13 @@ public class TipoDeEnderecoTest {
 		assertNotEquals(TIPODEENDERECO.ENDERECORESIDENCIAL.name(), comercial.name());
 	}
 	
-	@Test
-	public void nao_deve_aceitar_tipo_comercial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
-	}
+//	@Test
+//	public void nao_deve_aceitar_tipo_comercial_nulo() {
+//		fail();
+////		TIPODEENDERECO residencial = null;
+////		residencial.setTipo(null);
+////		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
+//	}
 	
 	@Test
 	public void deve_imprimir_tostring_para_tipo_residencial() {
