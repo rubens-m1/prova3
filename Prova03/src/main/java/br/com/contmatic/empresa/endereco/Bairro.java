@@ -19,9 +19,6 @@ public class Bairro {
 	public Bairro() {
 		super();
 	}
-	
-	public Bairro(String bairro) {
-	}
 
 	public String getBairro() {
 		return bairro;
@@ -44,8 +41,8 @@ public class Bairro {
 			return false;
 		}
 
-		Bairro bairro = (Bairro) obj;
-		return new EqualsBuilder().append(bairro, bairro.getBairro()).isEquals();
+		Bairro bairro1 = (Bairro) obj;
+		return new EqualsBuilder().append(bairro, bairro1.getBairro()).isEquals();
 	}
 
 	public int hashCode() {

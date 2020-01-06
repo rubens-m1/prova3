@@ -7,16 +7,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
 public class Cidade {
-	
+
 	@Valid
 	@NotNull(message = "A lista de bairros nao pode ser nula")
 	private Set<Bairro> bairro;
@@ -29,6 +29,10 @@ public class Cidade {
 	@Valid
 	@NotNull(message = "UF da cidade nao pode ser nulo")
 	private UFBRASIL uf;
+
+	public Cidade() {
+		super();
+	}
 
 	public Set<Bairro> getBairro() {
 		return bairro;
@@ -54,6 +58,7 @@ public class Cidade {
 		this.nomeCidade = nomeCidade;
 	}
 	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -68,13 +73,15 @@ public class Cidade {
 		}
 		
 		Cidade cidade = (Cidade) obj;
-		return new EqualsBuilder().append(nomeCidade, cidade.getNomeCidade()).append(bairro, cidade.getBairro()).isEquals();
+		return new EqualsBuilder().append(nomeCidade, cidade.nomeCidade).isEquals();
 	}
-	
+
+	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(nomeCidade).append(uf).hashCode();
+		return new HashCodeBuilder().append(nomeCidade).append(uf).append(bairro).hashCode();
 	}
 	
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}

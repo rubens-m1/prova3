@@ -13,6 +13,9 @@ import org.joda.time.LocalTime;
 import com.google.code.beanmatchers.BeanMatchers;
 import com.google.code.beanmatchers.ValueGenerator;
 
+import br.com.contmatic.empresa.Email;
+import br.com.contmatic.empresa.Empresa;
+import br.com.contmatic.empresa.SitesEmpresa;
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
@@ -70,6 +73,36 @@ public class Utilidades {
 		boolean valido = true;
 		Set<ConstraintViolation<Telefone>> restricoes = validator.validate(telefone);
 		for (ConstraintViolation<Telefone> constraintViolation : restricoes)
+			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
+				valido = false;
+		return valido;
+	}
+	
+	public static boolean isValid(SitesEmpresa site, String mensagem) {
+		validator = factory.getValidator();
+		boolean valido = true;
+		Set<ConstraintViolation<SitesEmpresa>> restricoes = validator.validate(site);
+		for (ConstraintViolation<SitesEmpresa> constraintViolation : restricoes)
+			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
+				valido = false;
+		return valido;
+	}
+	
+	public static boolean isValid(Email emailFunc, String mensagem) {
+		validator = factory.getValidator();
+		boolean valido = true;
+		Set<ConstraintViolation<Email>> restricoes = validator.validate(emailFunc);
+		for (ConstraintViolation<Email> constraintViolation : restricoes)
+			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
+				valido = false;
+		return valido;
+	}
+	
+	public static boolean isValid(Empresa empresa, String mensagem) {
+		validator = factory.getValidator();
+		boolean valido = true;
+		Set<ConstraintViolation<Empresa>> restricoes = validator.validate(empresa);
+		for (ConstraintViolation<Empresa> constraintViolation : restricoes)
 			if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
 				valido = false;
 		return valido;

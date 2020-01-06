@@ -138,6 +138,7 @@ public class Funcionario{
 		this.email = email;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -152,13 +153,15 @@ public class Funcionario{
 		}
 
 		Funcionario funcionario = (Funcionario) obj;
-		return new EqualsBuilder().append(cpf, funcionario.cpf).isEquals();
+		return new EqualsBuilder().append(cpf, funcionario.getCpf()).isEquals();
 	}
 
+	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(cpf).hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}

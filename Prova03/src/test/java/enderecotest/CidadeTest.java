@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.code.beanmatchers.BeanMatchers;
+
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.FixtureCidade;
@@ -42,13 +44,6 @@ public class CidadeTest {
 		bairros = new HashSet<>();
 	}
 
-//	@Test
-//	public void nao_deve_aceitar_cidade_nula() {
-//		cidade = null;
-//		System.out.println(cidade);
-//		assertFalse(isValid(cidade, "A lista de bairros nao pode ser nula"));
-//	}
-
 	@Test
 	public void nao_deve_aceitar_cidade_sem_bairros() {
 		cidade.setBairro(null);
@@ -78,11 +73,6 @@ public class CidadeTest {
 	@Test
 	public void deve_aceitar_cidade_com_mais_de_um_bairro() {
 		assertTrue(cidade.getBairro().size() > 1);
-	}
-
-	@Test
-	public void deve_acertar_que_tem_5_bairros() {
-		assertTrue((cidade.getBairro().size() == 5));
 	}
 
 	@Test
@@ -204,15 +194,15 @@ public class CidadeTest {
 		assertThat(Cidade.class, hasValidGettersAndSetters());
 	}
 
-//	@Test
-//	public void deve_respeitar_hash_code() {
-//		assertThat(Cidade.class, BeanMatchers.hasValidBeanHashCode());
-//	}
+	@Test
+	public void deve_respeitar_hash_code() {
+		assertThat(Cidade.class, BeanMatchers.hasValidBeanHashCode());
+	}
 
-//	@Test
-//	public void deve_respeitar_equals() {
-//		assertThat(Cidade.class, BeanMatchers.hasValidBeanEquals());
-//	}
+	@Test
+	public void deve_respeitar_equals() {
+		assertThat(Cidade.class, BeanMatchers.hasValidBeanEquals());
+	}
 
 }
 

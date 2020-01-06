@@ -138,9 +138,9 @@ public class BairroTest {
 		assertThat(Bairro.class, BeanMatchers.hasValidBeanHashCode());
 	}
 
-//	@Test
-//	public void deve_respeitar_equals() {
-//		assertThat(Bairro.class, BeanMatchers.hasValidBeanEquals());
-//	}
+	@Test
+	public void deve_respeitar_equals() {
+		assertThat(Bairro.class, BeanMatchers.hasValidBeanEquals());
+	}
 
 }

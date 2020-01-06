@@ -27,8 +27,8 @@ public class Empresa {
 
 	// size?
 	// tirar o caso 000000000000
-	@NotBlank
-	@CNPJ
+	@NotBlank(message = "CNPJ nao pode conter apenas espacos, estar vazio ou nulo")
+	@CNPJ(message = "CNPJ invalido.")
 	private String cnpj;
 
 	@NotBlank
@@ -62,7 +62,7 @@ public class Empresa {
 	@NotNull
 	// @Size.List
 	// @Size
-	private Set<EmailsEmpresa> emailEmpresa;
+	private Set<Email> emailEmpresa;
 
 	@Valid
 	@NotNull
@@ -123,11 +123,11 @@ public class Empresa {
 		this.funcionario = funcionario;
 	}
 
-	public Set<EmailsEmpresa> getEmailEmpresa() {
+	public Set<Email> getEmailEmpresa() {
 		return emailEmpresa;
 	}
 
-	public void setEmailEmpresa(Set<EmailsEmpresa> emailEmpresa) {
+	public void setEmailEmpresa(Set<Email> emailEmpresa) {
 		this.emailEmpresa = emailEmpresa;
 	}
 

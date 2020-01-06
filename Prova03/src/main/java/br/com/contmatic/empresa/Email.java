@@ -2,45 +2,34 @@ package br.com.contmatic.empresa;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.funcionario.Funcionario;
 
-public class EmailsEmpresa {
+public class Email {
 
-	@NotNull
+	@NotNull(message = "Funcionario nao pode ser nulo")
 	@Valid
 	private Funcionario funcionario;
 
-	// CRIAR UM ENUM PARA TIPOS DE AREA
-	@NotNull
-	@Pattern(regexp = "")
-	@Size
-	private String area;
 
-	@Email
-	@NotNull
+	@org.hibernate.validator.constraints.Email
+	@NotBlank(message = "Email nao pode conter apenas espacos, estar vazio ou nulo")
 	private String email;
 
-	public String getArea() {
-		return area;
-	}
 
-	public EmailsEmpresa() {
+	public Email() {
 		super();
 	}
 
-	public EmailsEmpresa(Funcionario funcionario, String area, String email) {
+	public Email(Funcionario funcionario, String area, String email) {
 		super();
 		this.funcionario = funcionario;
-		this.area = area;
 		this.email = email;
 	}
 
@@ -50,10 +39,6 @@ public class EmailsEmpresa {
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
 	}
 
 	public String getEmail() {
@@ -77,7 +62,7 @@ public class EmailsEmpresa {
 			return false;
 		}
 
-		EmailsEmpresa emailsEmpresa = (EmailsEmpresa) obj;
+		Email emailsEmpresa = (Email) obj;
 		return new EqualsBuilder().append(email, emailsEmpresa.email).isEquals();
 	}
 
