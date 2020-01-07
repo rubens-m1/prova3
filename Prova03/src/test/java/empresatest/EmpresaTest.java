@@ -3,6 +3,7 @@ package empresatest;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -60,9 +61,9 @@ public class EmpresaTest {
 	
 	@Test
 	public void nao_deve_aceitar_empresa_com_cnpj_nulo() {
-		empresa.setCnpj(null);
-		assertFalse(isValid(empresa, "CNPJ nao pode conter apenas espacos, estar vazio ou nulo"));
 		fail();
+		//empresa.setCnpj(null);
+		//assertFalse(isValid(empresa, "CNPJ nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	@Test
@@ -136,6 +137,92 @@ public class EmpresaTest {
 		empresa.setCnpj("742923170001812");
 		assertFalse(isValid(empresa, "CNPJ invalido."));
 	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_valida() {
+		empresa.setRazaoSocial("Empresa 123");
+		assertTrue(isValid(empresa, "Empresa 123"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_valida_com_caracteres_especiais() {
+		empresa.setRazaoSocial("Empresa !@#$%¨&*()_+");
+		assertTrue(isValid(empresa, "Empresa !@#$%¨&*()_+"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_razao_social_nula() {
+		empresa.setRazaoSocial(null);
+		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazio ou nula"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_razao_social_vazia() {
+		empresa.setRazaoSocial("");
+		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazia ou nula"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_razao_social_em_branco() {
+		empresa.setRazaoSocial(" 			");
+		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazia ou nula"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_nula() {
+		empresa.setRazaoSocial(null);
+		assertTrue(empresa.getRazaoSocial().equals(null));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_vazia() {
+		empresa.setRazaoSocial("");
+		assertTrue(isValid(empresa, ""));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_em_branco() {
+		empresa.setRazaoSocial("   			");
+		assertTrue(isValid(empresa, "   			"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_com_1_caractere() {
+		empresa.setRazaoSocial("a");
+		assertTrue(isValid(empresa, "a"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_razao_social_com_100_caracteres() {
+		empresa.setRazaoSocial("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		assertTrue(isValid(empresa, "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_razao_social_com_mais_de_100_caracteres() {
+		empresa.setRazaoSocial("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901");
+		assertFalse(isValid(empresa, "Razão social deve ter de 1 a 100 caracteres"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_nome_fantasia_com_1_caractere() {
+		empresa.setNomeFantasia("a");
+		assertTrue(isValid(empresa, "a"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_nome_fantasia_com_100_caracteres() {
+		empresa.setNomeFantasia("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		assertTrue(isValid(empresa, "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_nome_fantasia_com_mais_de_100_caracteres() {
+		empresa.setNomeFantasia("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901");
+		assertFalse(isValid(empresa, "Nome Fantasia deve ter de 1 a 100 caracteres"));
+	}
+	
+	
 	
 	@Test
 	public void deve_respeitar_os_gets_sets() {

@@ -3,10 +3,12 @@ package br.com.contmatic.empresa;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -25,19 +27,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Empresa {
 
-	// size?
-	// tirar o caso 000000000000
 	@NotBlank(message = "CNPJ nao pode conter apenas espacos, estar vazio ou nulo")
 	@CNPJ(message = "CNPJ invalido.")
 	private String cnpj;
 
-	@NotBlank
-	@Length
-	@Pattern(regexp = "")
+	
+	@NotBlank(message = "Razão social não pode conter apenas espacos, estar vazia ou nula")
+	@Size(min=1, max=100, message = "Razão social deve ter de 1 a 100 caracteres")
 	private String razaoSocial;
 
-	@Null
-	@Length
+	@Size(min=1, max=100, message = "Nome Fantasia deve ter de 1 a 100 caracteres")
 	private String nomeFantasia;
 
 	@Valid
@@ -87,7 +86,6 @@ public class Empresa {
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
-		checkNotNull(razaoSocial, "Razao Social nao pode ser nula"); 
 		this.razaoSocial = razaoSocial;
 	}
 
@@ -147,6 +145,7 @@ public class Empresa {
 		this.dataDeRegistro = dataDeRegistro;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -164,10 +163,12 @@ public class Empresa {
 		return new EqualsBuilder().append(cnpj, empresa.cnpj).isEquals();
 	}
 
+	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(cnpj).hashCode();
+		return new HashCodeBuilder().append(this.cnpj).toHashCode();
 	}
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}

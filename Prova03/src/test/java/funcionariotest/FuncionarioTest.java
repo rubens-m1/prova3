@@ -9,13 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.code.beanmatchers.BeanMatchers;
-import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
