@@ -222,8 +222,6 @@ public class EmpresaTest {
 		assertFalse(isValid(empresa, "Nome Fantasia deve ter de 1 a 100 caracteres"));
 	}
 	
-	
-	
 	@Test
 	public void deve_respeitar_os_gets_sets() {
 		assertThat(Empresa.class, hasValidGettersAndSetters());
