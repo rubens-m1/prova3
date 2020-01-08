@@ -10,6 +10,9 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.framework;
 import static util.Utilidades.isValid;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -31,7 +34,11 @@ public class EmpresaTest {
 	
 	private Endereco endereco;
 	
+	private Endereco endereco2;
+	
 	private Telefone telefone;
+	
+	private Set<Endereco> enderecos = new HashSet<>();
 	
 	@BeforeClass
 	public static void init() {
@@ -45,6 +52,8 @@ public class EmpresaTest {
 //		funcionario2 = Fixture.from(Funcionario.class).gimme("valido");
 		endereco = Fixture.from(Endereco.class).gimme("valido");
 		telefone = Fixture.from(Telefone.class).gimme("valido");
+		endereco = new Endereco();
+		endereco2 = new Endereco();
 	}
 
 	@Test
@@ -220,6 +229,94 @@ public class EmpresaTest {
 	public void nao_deve_aceitar_empresa_com_nome_fantasia_com_mais_de_100_caracteres() {
 		empresa.setNomeFantasia("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901");
 		assertFalse(isValid(empresa, "Nome Fantasia deve ter de 1 a 100 caracteres"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_enderecos_nulos() {
+		empresa.setEndereco(null);
+		assertFalse(isValid(empresa, "Endereço não pode ser nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_endereco_vazio() {
+		empresa.setEndereco(new HashSet<Endereco>());
+		assertFalse(isValid(empresa, "A lista de endereço está vazia"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_endereco_valido() {
+		assertTrue(isValid(empresa, empresa.getEndereco().toString()));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_enderecos_iguais() {
+		endereco.setCep("01507001");
+		endereco.setNumero("123");
+
+		endereco2.setCep("01507001");
+		endereco2.setNumero("123");
+
+		enderecos.add(endereco);
+		enderecos.add(endereco2);
+
+		empresa.setEndereco(enderecos);
+		assertThat(empresa.getEndereco().size(), is(1));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_enderecos_diferentes() {
+		endereco.setCep("12345678");
+		endereco.setNumero("123");
+
+		endereco2.setCep("01507001");
+		endereco2.setNumero("124");
+
+		enderecos.add(endereco);
+		enderecos.add(endereco2);
+
+		empresa.setEndereco(enderecos);
+		assertThat(empresa.getEndereco().size(), is(2));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_enderecos_com_mesmo_cep_e_numeros_diferentes() {
+		endereco.setCep("01507001");
+		endereco.setNumero("123");
+
+		endereco2.setCep("01507001");
+		endereco2.setNumero("124");
+
+		enderecos.add(endereco);
+		enderecos.add(endereco2);
+
+		empresa.setEndereco(enderecos);
+		assertThat(empresa.getEndereco().size(), is(2));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_enderecos_com_cep_diferentes_e_mesmo_numero() {
+		endereco.setCep("01507001");
+		endereco.setNumero("123");
+
+		endereco2.setCep("01507001");
+		endereco2.setNumero("124");
+
+		enderecos.add(endereco);
+		enderecos.add(endereco2);
+
+		empresa.setEndereco(enderecos);
+		assertThat(empresa.getEndereco().size(), is(2));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_mais_de_100_enderecos() {
+		for (int i = 0; i < 110; i++) {
+			endereco.setCep("08588145");
+			endereco.setNumero(Integer.toString(i));
+			enderecos.add(endereco);
+		}
+		empresa.setEndereco(enderecos);
+		assertFalse(isValid(empresa, "A lista de endereço máxima é de 100"));
 	}
 	
 	@Test

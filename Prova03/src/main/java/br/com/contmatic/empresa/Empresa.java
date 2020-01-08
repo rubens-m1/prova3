@@ -40,9 +40,9 @@ public class Empresa {
 	private String nomeFantasia;
 
 	@Valid
-	@NotNull
-	// @Size.List
-	// @Size
+	@NotNull(message = "Endereço não pode ser nulo")
+	@Size.List({ @Size(min = 1, message = "A lista de endereço está vazia"),
+		@Size(max = 100, message = "A lista de endereço máxima é de {max}") })
 	private Set<Endereco> endereco;
 
 	@Valid

@@ -109,6 +109,7 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -126,10 +127,12 @@ public class Endereco {
 		return new EqualsBuilder().append(numero, endereco.getNumero()).append(cep, endereco.getCep()).isEquals();
 	}
 
+	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(getNumero()).append(getCep()).hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}
