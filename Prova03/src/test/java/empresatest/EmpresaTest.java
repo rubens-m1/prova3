@@ -24,6 +24,8 @@ import br.com.contmatic.empresa.Email;
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.FixtureEmpresa;
 import br.com.contmatic.empresa.endereco.Endereco;
+import br.com.contmatic.empresa.funcionario.Funcionario;
+import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
 import util.Utilidades;
@@ -38,7 +40,17 @@ public class EmpresaTest {
 	
 	private Telefone telefone;
 	
+	private Telefone telefone2;
+	
+	private Funcionario funcionario;
+	
+	private Funcionario funcionario2;
+	
 	private Set<Endereco> enderecos = new HashSet<>();
+	
+	private Set<Telefone> telefones = new HashSet<>();
+	
+	private Set<Funcionario> funcionarios = new HashSet<>();
 	
 	@BeforeClass
 	public static void init() {
@@ -52,8 +64,11 @@ public class EmpresaTest {
 //		funcionario2 = Fixture.from(Funcionario.class).gimme("valido");
 		endereco = Fixture.from(Endereco.class).gimme("valido");
 		telefone = Fixture.from(Telefone.class).gimme("valido");
+		telefone2 = Fixture.from(Telefone.class).gimme("valido");
 		endereco = new Endereco();
 		endereco2 = new Endereco();
+		funcionario = new Funcionario();
+		funcionario2 = new Funcionario();
 	}
 
 	@Test
@@ -232,13 +247,13 @@ public class EmpresaTest {
 	}
 	
 	@Test
-	public void nao_deve_aceitar_enderecos_nulos() {
+	public void nao_deve_aceitar_empresa_com_endereco_nulo() {
 		empresa.setEndereco(null);
 		assertFalse(isValid(empresa, "Endereço não pode ser nulo"));
 	}
 	
 	@Test
-	public void nao_deve_aceitar_endereco_vazio() {
+	public void nao_deve_aceitar_empresa_com_endereco_vazio() {
 		empresa.setEndereco(new HashSet<Endereco>());
 		assertFalse(isValid(empresa, "A lista de endereço está vazia"));
 	}
@@ -249,7 +264,7 @@ public class EmpresaTest {
 	}
 	
 	@Test
-	public void nao_deve_aceitar_empresa_com_enderecos_iguais() {
+	public void deve_acertar_empresa_com_enderecos_iguais_e_so_um_endereco() {
 		endereco.setCep("01507001");
 		endereco.setNumero("123");
 
@@ -308,6 +323,7 @@ public class EmpresaTest {
 		assertThat(empresa.getEndereco().size(), is(2));
 	}
 	
+	
 	@Test
 	public void nao_deve_aceitar_empresa_com_mais_de_100_enderecos() {
 		for (int i = 0; i < 110; i++) {
@@ -316,7 +332,138 @@ public class EmpresaTest {
 			enderecos.add(endereco);
 		}
 		empresa.setEndereco(enderecos);
-		assertFalse(isValid(empresa, "A lista de endereço máxima é de 100"));
+		assertFalse(isValid(empresa, "A quantidade maxima é de 100 enderecos"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_telefone_nulo() {
+		empresa.setTelefone(null);
+		assertFalse(isValid(empresa, "Telefone não pode ser nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_telefone_vazio() {
+		empresa.setTelefone(new HashSet<Telefone>());
+		assertFalse(isValid(empresa, "A lista de telefone esta vazia"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_telefone_valido() {
+		assertTrue(isValid(empresa, empresa.getTelefone().toString()));
+	}
+	
+	@Test
+	public void deve_acertar_empresa_com_telefones_iguais_e_so_um_telefone() {
+		telefone.setDdd(DDD.DDD11);
+		telefone.setNumero("999999999");
+		telefone.setRamal("1");
+
+		telefone2.setDdd(DDD.DDD11);
+		telefone2.setNumero("999999999");
+		telefone2.setRamal("1");
+
+		telefones.add(telefone);
+		telefones.add(telefone2);
+
+		empresa.setTelefone(telefones);
+		assertThat(empresa.getTelefone().size(), is(1));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_telefones_diferentes() {
+		telefone.setDdd(DDD.DDD11);
+		telefone.setNumero("999999999");
+		telefone.setRamal("1");
+
+		telefone2.setDdd(DDD.DDD11);
+		telefone2.setNumero("999999998");
+		telefone2.setRamal("1");
+
+		telefones.add(telefone);
+		telefones.add(telefone2);
+
+		empresa.setTelefone(telefones);
+		assertThat(empresa.getTelefone().size(), is(2));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_telefones_com_mesmo_numero_e_ramal_diferente() {
+		telefone.setDdd(DDD.DDD11);
+		telefone.setNumero("999999999");
+		telefone.setRamal("1");
+
+		telefone2.setDdd(DDD.DDD11);
+		telefone2.setNumero("999999998");
+		telefone2.setRamal("2");
+
+		telefones.add(telefone);
+		telefones.add(telefone2);
+
+		empresa.setTelefone(telefones);
+		assertThat(empresa.getTelefone().size(), is(2));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_mais_de_100_telefones() {
+		for (int i = 0; i < 110; i++) {
+			telefone.setRamal(Integer.toString(i));
+			telefones.add(telefone);
+		}
+		empresa.setTelefone(telefones);
+		assertFalse(isValid(empresa, "A quantidade maxima é de 100 telefones"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_funcionario_nulo() {
+		empresa.setFuncionario(null);
+		assertFalse(isValid(empresa, "Funcionario não pode ser nulo"));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_funcionario_vazio() {
+		empresa.setFuncionario(new HashSet<Funcionario>());
+		assertFalse(isValid(empresa, "A lista de funcionarios esta vazia"));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_funcionario_valido() {
+		assertTrue(isValid(empresa, empresa.getFuncionario().toString()));
+	}
+	
+	@Test
+	public void deve_acertar_empresa_com_funcionarios_iguais_e_so_um_funcionario() {
+		funcionario.setCpf("34501799005");
+		
+		funcionario2.setCpf("34501799005");
+
+		funcionarios.add(funcionario);
+		funcionarios.add(funcionario2);
+
+		empresa.setFuncionario(funcionarios);
+		assertThat(empresa.getFuncionario().size(), is(1));
+	}
+	
+	@Test
+	public void deve_aceitar_empresa_com_dois_funcioarios_diferentes() {
+		funcionario.setCpf("34501799005");
+		
+		funcionario2.setCpf("98958869003");
+
+		funcionarios.add(funcionario);
+		funcionarios.add(funcionario2);
+
+		empresa.setFuncionario(funcionarios);
+		assertThat(empresa.getFuncionario().size(), is(2));
+	}
+	
+	@Test
+	public void nao_deve_aceitar_empresa_com_mais_de_100_funcionarios() {
+		for (int i = 0; i < 110; i++) {
+			funcionario.setCpf(Integer.toString(i));
+			funcionarios.add(funcionario);
+		}
+		empresa.setFuncionario(funcionarios);
+		assertFalse(isValid(empresa, "A quantidade maxima é de 100 funcionarios"));
 	}
 	
 	@Test

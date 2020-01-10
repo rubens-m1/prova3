@@ -42,19 +42,19 @@ public class Empresa {
 	@Valid
 	@NotNull(message = "Endereço não pode ser nulo")
 	@Size.List({ @Size(min = 1, message = "A lista de endereço está vazia"),
-		@Size(max = 100, message = "A lista de endereço máxima é de {max}") })
+		@Size(max = 100, message = "A quantidade maxima é de 100 enderecos") })
 	private Set<Endereco> endereco;
 
 	@Valid
-	@NotNull
-	// @Size.List
-	// @Size
+	@NotNull(message = "Telefone não pode ser nulo")
+	@Size.List({ @Size(min = 1, message = "A lista de telefone esta vazia"),
+		@Size(max = 100, message = "A quantidade maxima é de 100 telefones") })
 	private Set<Telefone> telefone;
 
 	@Valid
-	@NotNull
-	// @Size.List
-	// @Size
+	@NotNull(message = "Funcionario não pode ser nulo")
+	@Size.List({ @Size(min = 1, message = "A lista de funcionarios esta vazia"),
+		@Size(max = 100, message = "A quantidade maxima é de 100 funcionarios") })
 	private Set<Funcionario> funcionario;
 
 	@Valid

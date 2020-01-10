@@ -64,6 +64,7 @@ public class Telefone {
 		this.ramal = ramal;
 	}
 	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -78,15 +79,17 @@ public class Telefone {
 		}
 
 		Telefone telefone = (Telefone) obj;
-		return new EqualsBuilder().append(ddd, telefone.getDdd()).append(numero, telefone.getClass())
+		return new EqualsBuilder().append(numero, telefone.getNumero())
 				.append(ramal, telefone.getRamal()).isEquals();
 
 	}
 
+	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(getDdd()).append(getNumero()).append(getRamal()).hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}
