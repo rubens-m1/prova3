@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -14,6 +15,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.joda.time.LocalDate;
 
@@ -78,6 +80,7 @@ public class Empresa {
 	/** The data de registro. */
 	@Past(message = "Data de nascimento não pode ser no futuro")
 	@NotNull(message = "Data de registro não pode ser nula")
+	@Future
 	private LocalDate dataDeRegistro;
 
 	/**

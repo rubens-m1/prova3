@@ -15,6 +15,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.LocalDate;
 
@@ -59,8 +60,9 @@ public class Funcionario{
 
 	/** The salario. */
 	@NotNull(message = "Salario nao pode ser nulo")
-	@Min(value = 998, message = "O valor do salario deve ser maior ou igual a 998")
-	@Max(value = 999999999, message = "O valor do salario deve ser menor ou igual a 999999999")
+//	@Min(value = 998, message = "O valor do salario deve ser maior ou igual a 998")
+//	@Max(value = 999999999, message = "O valor do salario deve ser menor ou igual a 999999999")
+	@Range(min=998, max=999999999, message = "O valor do salario deve ser entre R$998,00 e R$999999999,00")
 	private Double salario;
 
 	/** The endereco. */

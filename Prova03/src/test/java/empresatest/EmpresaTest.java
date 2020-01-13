@@ -109,8 +109,8 @@ public class EmpresaTest {
 	 */
 	@Test
 	public void deve_aceitar_empresa_valida() {
-		System.out.println(empresa);
-		fail();
+	    System.out.println(empresa.toString());
+		assertTrue(isValid(empresa, empresa.toString()));
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class EmpresaTest {
 	@Test
 	public void nao_deve_aceitar_empresa_com_razao_social_nula() {
 		empresa.setRazaoSocial(null);
-		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazio ou nula"));
+		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazia ou nula"));
 	}
 	
 	/**

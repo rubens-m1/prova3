@@ -16,7 +16,7 @@ import br.com.contmatic.empresa.funcionario.Funcionario;
 /**
  * The Class Email.
  */
-public class Email {
+public final class Email {
 
 	/** The funcionario. */
 	@NotNull(message = "Funcionario nao pode ser nulo")
@@ -33,7 +33,6 @@ public class Email {
 	 * Instantiates a new email.
 	 */
 	public Email() {
-		super();
 	}
 
 	/**
@@ -92,7 +91,7 @@ public class Email {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -105,7 +104,7 @@ public class Email {
 			return false;
 		}
 
-		Email emailsEmpresa = (Email) obj;
+		final Email emailsEmpresa = (Email) obj;
 		return new EqualsBuilder().append(email, emailsEmpresa.email).isEquals();
 	}
 
@@ -115,7 +114,7 @@ public class Email {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(email).hashCode();
 	}
 

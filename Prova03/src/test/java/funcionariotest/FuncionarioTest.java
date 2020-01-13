@@ -623,7 +623,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_menor_que_o_salario_minimo() {
 		funcionario.setSalario(997.00);
-		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser maior ou igual a 998"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser entre R$998,00 e R$999999999,00"));
 	}
 	
 	/**
@@ -632,7 +632,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_maior_que_o_salario_maximo() {
 		funcionario.setSalario(1000000000.00);
-		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser entre R$998,00 e R$999999999,00"));
 	}
 	
 	/**

@@ -17,6 +17,8 @@ import br.com.contmatic.empresa.Email;
 import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.six2six.fixturefactory.Fixture;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
 // TODO: Auto-generated Javadoc
@@ -182,6 +184,9 @@ public class EmailTest {
 		assertThat(Email.class, BeanMatchers.hasValidBeanEquals());
 	}
 	
-	
+	@Test
+	public void equals_hashCode() {
+	    EqualsVerifier.forClass(Email.class).withOnlyTheseFields("email").suppress(Warning.NONFINAL_FIELDS).verify();
+	}
 
 }
