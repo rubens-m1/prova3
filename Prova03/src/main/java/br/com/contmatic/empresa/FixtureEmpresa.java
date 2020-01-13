@@ -19,6 +19,9 @@ import br.com.six2six.fixturefactory.Rule;
 
 public class FixtureEmpresa {
 	
+	/**
+	 * Fake empresa.
+	 */
 	public static void fakeEmpresa() {
 		Fixture.of(Empresa.class).addTemplate("valido", new Rule() {
 			{

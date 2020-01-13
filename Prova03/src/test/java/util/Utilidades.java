@@ -22,12 +22,25 @@ import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Utilidades.
+ */
 public class Utilidades {
 	
+	/** The validator. */
 	private static Validator validator;
 
+	/** The factory. */
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param endereco the endereco
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Endereco endereco, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -38,6 +51,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param bairro the bairro
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Bairro bairro, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -48,6 +68,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param cidade the cidade
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Cidade cidade, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -58,6 +85,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param funcionario the funcionario
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Funcionario funcionario, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -68,6 +102,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param telefone the telefone
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Telefone telefone, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -78,6 +119,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param site the site
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(SitesEmpresa site, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -88,6 +136,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param emailFunc the email func
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Email emailFunc, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -98,6 +153,13 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param empresa the empresa
+	 * @param mensagem the mensagem
+	 * @return true, if is valid
+	 */
 	public static boolean isValid(Empresa empresa, String mensagem) {
 		validator = factory.getValidator();
 		boolean valido = true;
@@ -108,6 +170,9 @@ public class Utilidades {
 		return valido;
 	}
 	
+	/**
+	 * Reconhecer joda time.
+	 */
 	public static void reconhecerJodaTime() {
 		BeanMatchers.registerValueGenerator(new ValueGenerator<LocalTime>() {
 			public LocalTime generate() {

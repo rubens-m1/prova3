@@ -7,8 +7,15 @@ import java.util.Random;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FixtureCidade.
+ */
 public class FixtureCidade {
 	
+	/**
+	 * Criar cidade.
+	 */
 	public static void criarCidade() {
 		Fixture.of(Cidade.class).addTemplate("valido", new Rule() {
 			{
@@ -29,4 +36,5 @@ public class FixtureCidade {
 		System.out.println("");
 		
 	}
+	
 }

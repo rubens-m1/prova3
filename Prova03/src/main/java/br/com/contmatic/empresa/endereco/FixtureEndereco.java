@@ -8,8 +8,15 @@ import java.util.Random;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FixtureEndereco.
+ */
 public class FixtureEndereco {
 
+	/**
+	 * Fake endereco.
+	 */
 	public static void fakeEndereco() {
 		Fixture.of(Endereco.class).addTemplate("valido", new Rule() {
 			{
@@ -41,4 +48,5 @@ public class FixtureEndereco {
 		System.out.println(endereco);
 		System.out.println("");
 	}
+	
 }

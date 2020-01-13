@@ -5,8 +5,15 @@ import java.util.Random;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FixtureTelefone.
+ */
 public class FixtureTelefone {
 
+	/**
+	 * Fake telefone.
+	 */
 	public static void fakeTelefone() {
 
 		Fixture.of(Telefone.class).addTemplate("valido", new Rule() {{
@@ -20,4 +27,5 @@ public class FixtureTelefone {
 		System.out.println("");
 		
 	}
+	
 }

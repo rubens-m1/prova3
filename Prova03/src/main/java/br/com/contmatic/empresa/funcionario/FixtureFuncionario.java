@@ -18,6 +18,9 @@ import br.com.six2six.fixturefactory.Rule;
 
 public class FixtureFuncionario {
 
+	/**
+	 * Fake funcionario.
+	 */
 	public static void fakeFuncionario() {
 		Fixture.of(Funcionario.class).addTemplate("valido", new Rule() {
 			{
@@ -26,8 +29,8 @@ public class FixtureFuncionario {
 			add("primeiroNome",random("João", "Felipe","Maria","Fernanda"));
 			add("sobrenome",random("Silva", "Ferreira","Cruz","Barros"));
 			add("dataDeNascimento", new org.joda.time.LocalDate(RandomUtils.nextInt(1900, 2003), RandomUtils.nextInt(1, 12), RandomUtils.nextInt(1, 28)));
-			add("cargo","Programador(a)");
-			add("salario","5000.00");
+			add("cargo",random("Consultor", "Programador(a)", "Diretor(a)"));
+			add("salario",random("5000.00", "6000.00", "7000.00"));
 			add("endereco",one(Endereco.class, "valido"));
 			add("telefone", has(1).of(Telefone.class, "valido"));
 			add("email","funcionario@empresa.com");
