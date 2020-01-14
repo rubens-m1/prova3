@@ -1,14 +1,18 @@
-package br.com.contmatic.empresa.endereco;
+package fixtures;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
 
 import java.util.Random;
 
+import br.com.contmatic.empresa.endereco.Bairro;
+import br.com.contmatic.empresa.endereco.Cidade;
+import br.com.contmatic.empresa.endereco.Endereco;
+import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
+import br.com.contmatic.empresa.endereco.UFBRASIL;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FixtureEndereco.
  */
@@ -44,9 +48,6 @@ public class FixtureEndereco {
 			}
 		});
 
-		Endereco endereco = Fixture.from(Endereco.class).gimme("valido");
-		System.out.println(endereco);
-		System.out.println("");
 	}
 	
 }

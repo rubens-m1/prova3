@@ -19,7 +19,9 @@ import br.com.contmatic.empresa.SitesEmpresa;
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
+import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 import br.com.contmatic.empresa.funcionario.Funcionario;
+import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
 
 // TODO: Auto-generated Javadoc
@@ -169,6 +171,26 @@ public class Utilidades {
 				valido = false;
 		return valido;
 	}
+	
+	   public static boolean isValid(TIPODEENDERECO tipo, String mensagem) {
+	        validator = factory.getValidator();
+	        boolean valido = true;
+	        Set<ConstraintViolation<TIPODEENDERECO>> restricoes = validator.validate(tipo);
+	        for (ConstraintViolation<TIPODEENDERECO> constraintViolation : restricoes)
+	            if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
+	                valido = false;
+	        return valido;
+	    }
+	   
+       public static boolean isValid(DDD ddd, String mensagem) {
+           validator = factory.getValidator();
+           boolean valido = true;
+           Set<ConstraintViolation<DDD>> restricoes = validator.validate(ddd);
+           for (ConstraintViolation<DDD> constraintViolation : restricoes)
+               if (constraintViolation.getMessage().equalsIgnoreCase(mensagem))
+                   valido = false;
+           return valido;
+       }
 	
 	/**
 	 * Reconhecer joda time.

@@ -2,17 +2,16 @@ package br.com.contmatic.empresa;
 
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.URL;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SitesEmpresa.
  */
-public class SitesEmpresa {
+public final class SitesEmpresa {
 
 
 	/** The url. */
@@ -24,7 +23,6 @@ public class SitesEmpresa {
 	 * Instantiates a new sites empresa.
 	 */
 	public SitesEmpresa() {
-		super();
 	}
 
 	/**
@@ -52,7 +50,7 @@ public class SitesEmpresa {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -66,7 +64,7 @@ public class SitesEmpresa {
 		}
 
 		SitesEmpresa siteEmpresa = (SitesEmpresa) obj;
-		return new EqualsBuilder().append(url, siteEmpresa.getUrl()).isEquals();
+		return new EqualsBuilder().append(url, siteEmpresa.url).isEquals();
 	}
 
 	/**
@@ -75,7 +73,7 @@ public class SitesEmpresa {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(url).hashCode();
 	}
 

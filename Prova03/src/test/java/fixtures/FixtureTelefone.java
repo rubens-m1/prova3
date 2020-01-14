@@ -1,11 +1,12 @@
-package br.com.contmatic.empresa.telefone;
+package fixtures;
 
 import java.util.Random;
 
+import br.com.contmatic.empresa.telefone.DDD;
+import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FixtureTelefone.
  */

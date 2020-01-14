@@ -6,21 +6,20 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.funcionario.Funcionario;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Email.
  */
 public final class Email {
 
 	/** The funcionario. */
-	@NotNull(message = "Funcionario nao pode ser nulo")
 	@Valid
+	@NotNull(message = "Funcionario nao pode ser nulo")
 	private Funcionario funcionario;
 
 	/** The email. */
@@ -42,8 +41,7 @@ public final class Email {
 	 * @param area the area
 	 * @param email the email
 	 */
-	public Email(Funcionario funcionario, String area, String email) {
-		super();
+	public Email(Funcionario funcionario, String email) {
 		this.funcionario = funcionario;
 		this.email = email;
 	}

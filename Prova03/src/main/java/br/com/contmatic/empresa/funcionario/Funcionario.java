@@ -3,17 +3,15 @@ package br.com.contmatic.empresa.funcionario;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CPF;
@@ -23,11 +21,10 @@ import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Funcionario.
  */
-public class Funcionario{
+public final class Funcionario{
 
 	/** The cpf. */
 	@CPF(message = "CPF invalido")
@@ -60,8 +57,6 @@ public class Funcionario{
 
 	/** The salario. */
 	@NotNull(message = "Salario nao pode ser nulo")
-//	@Min(value = 998, message = "O valor do salario deve ser maior ou igual a 998")
-//	@Max(value = 999999999, message = "O valor do salario deve ser menor ou igual a 999999999")
 	@Range(min=998, max=999999999, message = "O valor do salario deve ser entre R$998,00 e R$999999999,00")
 	private Double salario;
 
@@ -250,7 +245,7 @@ public class Funcionario{
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -264,7 +259,7 @@ public class Funcionario{
 		}
 
 		Funcionario funcionario = (Funcionario) obj;
-		return new EqualsBuilder().append(cpf, funcionario.getCpf()).isEquals();
+		return new EqualsBuilder().append(cpf, funcionario.cpf).isEquals();
 	}
 
 	/**
@@ -273,7 +268,7 @@ public class Funcionario{
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(cpf).hashCode();
 	}
 

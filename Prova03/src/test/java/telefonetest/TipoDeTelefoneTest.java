@@ -1,10 +1,10 @@
 package telefonetest;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Set;
 
@@ -18,7 +18,6 @@ import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.TIPODETELEFONE;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TipoDeTelefoneTest.
  */
@@ -195,16 +194,6 @@ public class TipoDeTelefoneTest {
 	}
 	
 	/**
-	 * Nao deve aceitar telefone celular com menos de 9 digitos.
-	 */
-	@Test
-	public void nao_deve_aceitar_telefone_celular_com_menos_de_9_digitos() {
-		fail();
-//		celular.setNumero("98765432");
-//		assertFalse(isValid(celular, ""));
-	}
-	
-	/**
 	 * Nao deve aceitar telefone comercial com menos de 8 digitos.
 	 */
 	@Test
@@ -238,16 +227,6 @@ public class TipoDeTelefoneTest {
 	public void nao_deve_aceitar_telefone_comercial_com_mais_de_9_digitos() {
 		comercial.setNumero("9876543210");
 		assertFalse(isValid(comercial, "formato de telefone invalido"));
-	}
-	
-	/**
-	 * Nao deve aceitar telefone fixo com mais de 8 digitos.
-	 */
-	@Test
-	public void nao_deve_aceitar_telefone_fixo_com_mais_de_8_digitos() {
-		fail();
-//		fixo.setNumero("987654321");
-//		assertFalse(isValid(fixo, "formato de telefone invalido"));
 	}
 	
 	/**
@@ -290,9 +269,9 @@ public class TipoDeTelefoneTest {
 	 * Deve imprimir tostring com telefone celular correto.
 	 */
 	@Test
-	public void deve_imprimir_tostring_com_telefone_celular_correto() {
+	public void deve_verificar_tostring() {
 		celular.setNumero("987654321");
-		System.out.println(celular.toString());
+		assertThat(celular.toString(), containsString("987654321,TELEFONECELULAR,0"));
 	}
 	
 	/**
@@ -310,7 +289,7 @@ public class TipoDeTelefoneTest {
 	@Test
 	public void deve_imprimir_tostring_com_telefone_comercial_com_9_digitos_correto() {
 		comercial.setNumero("987654321");
-		System.out.println(comercial.toString());
+		assertThat(comercial.toString(), containsString("987654321"));
 	}
 	
 	/**

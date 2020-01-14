@@ -1,5 +1,6 @@
 package enderecotest;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -9,7 +10,6 @@ import org.junit.Test;
 
 import br.com.contmatic.empresa.endereco.UFBRASIL;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class UfTest.
  */
@@ -20,8 +20,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_uf_nula() {
-		UFBRASIL ufbrasil = UFBRASIL.AC;
-		assertTrue(ufbrasil.getUf() != null);
+		UFBRASIL ufBrasil = UFBRASIL.AC;
+		assertTrue(ufBrasil.getUf() != null);
 	}
 	
 	/**
@@ -29,8 +29,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_uf_vazia() {
-		UFBRASIL ufbrasil = UFBRASIL.AL;
-		assertTrue(ufbrasil.getUf() != "");
+		UFBRASIL ufBrasil = UFBRASIL.AL;
+		assertTrue(ufBrasil.getUf() != "");
 	}
 
 	/**
@@ -38,8 +38,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_aceitar_uf_esperada() {
-		UFBRASIL ufbrasil = UFBRASIL.AM;
-		assertThat(ufbrasil.getUf(), is("AM"));
+		UFBRASIL ufBrasil = UFBRASIL.AM;
+		assertThat(ufBrasil.getUf(), is("AM"));
 	}
 	
 	/**
@@ -47,8 +47,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_uf_diferente_da_esperada() {
-		UFBRASIL ufbrasil = UFBRASIL.AP;
-		assertTrue(ufbrasil.getUf().toString() != "SP");
+		UFBRASIL ufBrasil = UFBRASIL.AP;
+		assertTrue(ufBrasil.getUf().toString() != "SP");
 	}
 	
 	/**
@@ -56,8 +56,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_acertar_comprimento_2_de_uf() {
-		UFBRASIL ufbrasil = UFBRASIL.BA;
-		assertThat(String.valueOf(ufbrasil.getUf()).length(), is(2));
+		UFBRASIL ufBrasil = UFBRASIL.BA;
+		assertThat(String.valueOf(ufBrasil.getUf()).length(), is(2));
 	}
 	
 	/**
@@ -65,8 +65,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_comprimento_menor_que_2_em_uf() {
-		UFBRASIL ufbrasil = UFBRASIL.CE;
-		assertFalse(String.valueOf(ufbrasil.getUf()).length()<2);
+		UFBRASIL ufBrasil = UFBRASIL.CE;
+		assertFalse(String.valueOf(ufBrasil.getUf()).length()<2);
 	}
 	
 	/**
@@ -74,8 +74,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_comprimento_maior_que_2_em_uf() {
-		UFBRASIL ufbrasil = UFBRASIL.DF;
-		assertFalse(String.valueOf(ufbrasil.getUf()).length()>2);
+		UFBRASIL ufBrasil = UFBRASIL.DF;
+		assertFalse(String.valueOf(ufBrasil.getUf()).length()>2);
 	}
 	
 	/**
@@ -83,8 +83,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_regiao_nula() {
-		UFBRASIL ufbrasil = UFBRASIL.ES;
-		assertTrue(ufbrasil.getRegiao() != null);
+		UFBRASIL ufBrasil = UFBRASIL.ES;
+		assertTrue(ufBrasil.getRegiao() != null);
 	}
 	
 	/**
@@ -92,8 +92,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_regiao_vazia() {
-		UFBRASIL ufbrasil = UFBRASIL.GO;
-		assertTrue(ufbrasil.getRegiao() != "");
+		UFBRASIL ufBrasil = UFBRASIL.GO;
+		assertTrue(ufBrasil.getRegiao() != "");
 	}
 	
 	/**
@@ -101,8 +101,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_aceitar_regiao_esperada() {
-		UFBRASIL ufbrasil = UFBRASIL.MA;
-		assertThat(ufbrasil.getRegiao(), is("Maranhão"));
+		UFBRASIL ufBrasil = UFBRASIL.MA;
+		assertThat(ufBrasil.getRegiao(), is("Maranhão"));
 	}
 	
 	/**
@@ -111,8 +111,8 @@ public class UfTest {
 	//ARRUMAR
 	@Test
 	public void nao_deve_aceitar_regiao_diferente_da_esperada() {
-		UFBRASIL ufbrasil = UFBRASIL.MG;
-		assertTrue(ufbrasil.getRegiao().toString() != "Maranhão");
+		UFBRASIL ufBrasil = UFBRASIL.MG;
+		assertTrue(ufBrasil.getRegiao().toString() != "Maranhão");
 	}
 	
 	/**
@@ -120,8 +120,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_acertar_comprimento_maximo_de_19_caracteres_em_regiao_rio_grande_do_norte() {
-		UFBRASIL ufbrasil = UFBRASIL.RN;
-		assertThat(String.valueOf(ufbrasil.getRegiao()).length(), is(19));
+		UFBRASIL ufBrasil = UFBRASIL.RN;
+		assertThat(String.valueOf(ufBrasil.getRegiao()).length(), is(19));
 	}
 	
 	/**
@@ -129,8 +129,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_acertar_comprimento_com_mais_de_19_caracteres_em_regiao() {
-		UFBRASIL ufbrasil = UFBRASIL.RN;
-		assertFalse(String.valueOf(ufbrasil.getRegiao()).length()>19);
+		UFBRASIL ufBrasil = UFBRASIL.RN;
+		assertFalse(String.valueOf(ufBrasil.getRegiao()).length()>19);
 	}
 	
 	/**
@@ -138,8 +138,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_acertar_comprimento_minimo_de_4_caracteres_em_regiao_acre_para() {
-		UFBRASIL ufbrasil = UFBRASIL.PA;
-		assertThat(String.valueOf(ufbrasil.getRegiao()).length(), is(4));
+		UFBRASIL ufBrasil = UFBRASIL.PA;
+		assertThat(String.valueOf(ufBrasil.getRegiao()).length(), is(4));
 	}
 	
 	/**
@@ -147,8 +147,8 @@ public class UfTest {
 	 */
 	@Test
 	public void nao_deve_acertar_comprimento_menor_que_4_caracteres_em_regiao() {
-		UFBRASIL ufbrasil = UFBRASIL.PA;
-		assertFalse(ufbrasil.getRegiao().length()<4);
+		UFBRASIL ufBrasil = UFBRASIL.PA;
+		assertFalse(ufBrasil.getRegiao().length()<4);
 	}
 	
 	/**
@@ -156,8 +156,8 @@ public class UfTest {
 	 */
 	@Test
 	public void deve_imprimir_test_de_to_string() {
-		UFBRASIL ufbrasil = UFBRASIL.SP;
-		System.out.println(ufbrasil.toString());
+		UFBRASIL ufBrasil = UFBRASIL.SP;
+		assertThat(ufBrasil.toString(), containsString("SP,São Paulo,SP,24"));
 	}
 
 }

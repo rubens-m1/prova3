@@ -1,15 +1,16 @@
 package telefonetest;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static util.Utilidades.isValid;
 
 import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.DDD;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DddTest.
  */
@@ -19,9 +20,9 @@ public class DddTest {
 	 * Deve imprimir to string.
 	 */
 	@Test
-	public void deve_imprimir_to_string() {
+	public void deve_conter_to_string() {
 		DDD ddd = DDD.DDD11;
-		System.out.println(ddd.toString());
+		assertThat(ddd.toString(), containsString("São Paulo – SP,11,DDD11,0"));
 	}
 	
 	/**
@@ -111,7 +112,8 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_ddd_vazio() {
 		DDD ddd = DDD.DDD22;
-		assertTrue(ddd.getDdd() != "");
+		ddd.setDdd("");
+        assertFalse(isValid(ddd, "ddd nao pode ser nulo, vazio ou conter somente espaços"));
 	}
 
 	/**
@@ -120,7 +122,8 @@ public class DddTest {
 	@Test 
 	public void nao_deve_aceitar_regiao_vazia() {
 		DDD ddd = DDD.DDD24;
-		assertTrue(ddd.getRegiao() != "");
+		ddd.setRegiao("");
+		assertFalse(isValid(ddd, "regiao nao pode ser nulo, vazio ou conter somente espaços"));
 	}
 
 }

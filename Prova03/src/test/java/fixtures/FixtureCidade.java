@@ -1,13 +1,15 @@
-package br.com.contmatic.empresa.endereco;
+package fixtures;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
 import java.util.Random;
 
+import br.com.contmatic.empresa.endereco.Bairro;
+import br.com.contmatic.empresa.endereco.Cidade;
+import br.com.contmatic.empresa.endereco.UFBRASIL;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FixtureCidade.
  */
@@ -31,9 +33,6 @@ public class FixtureCidade {
 			}
 		});
 		
-		Cidade cidade = Fixture.from(Cidade.class).gimme("valido");
-		System.out.println(cidade);
-		System.out.println("");
 		
 	}
 	

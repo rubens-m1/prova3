@@ -1,15 +1,18 @@
 package enderecotest;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
+import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TipoDeEnderecoTest.
  */
@@ -34,15 +37,24 @@ public class TipoDeEnderecoTest {
 	}
 	
 	/**
-	 * Nao deve aceitar tipo residencial nulo.
+	 * Nao deve aceitar tipo residencial vazio.
 	 */
 	@Test
-	public void nao_deve_aceitar_tipo_residencial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
+	public void nao_deve_aceitar_tipo_residencial_vazio() {
+		TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
+		residencial.setTipo("");
+		assertFalse(Utilidades.isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
 	}
+	
+	   /**
+     * Nao deve aceitar tipo residencial nulo.
+     */
+    @Test
+    public void nao_deve_aceitar_tipo_residencial_nulo() {
+        TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
+        residencial.setTipo(null);
+        assertFalse(Utilidades.isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
+    }
 	
 	/**
 	 * Deve acertar que o tipo residencial e diferente de nulo.
@@ -76,11 +88,19 @@ public class TipoDeEnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_tipo_comercial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
+		TIPODEENDERECO comercial = TIPODEENDERECO.ENDERECOCOMERCIAL;
+		comercial.setTipo(null);
+        assertFalse(Utilidades.isValid(comercial, "Tipo de Endereco nao pode ser nulo"));		
 	}
+	
+	   /**
+   	 * Nao deve aceitar tipo comercial nulo 1.
+   	 */
+   	@Test
+	    public void nao_deve_aceitar_tipo_comercial_nulo1() {
+	        TIPODEENDERECO residencial = null;
+	        assertNull(residencial);    
+	    }
 	
 	/**
 	 * Deve imprimir tostring para tipo residencial.
@@ -88,7 +108,7 @@ public class TipoDeEnderecoTest {
 	@Test
 	public void deve_imprimir_tostring_para_tipo_residencial() {
 		TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
-		System.out.println(residencial.toString());
+		assertThat(residencial.toString(), containsString("ENDERECORESIDENCIAL"));
 	}
 	
 	/**
@@ -97,7 +117,7 @@ public class TipoDeEnderecoTest {
 	@Test
 	public void deve_imprimir_tostring_para_tipo_comercial() {
 		TIPODEENDERECO comercial = TIPODEENDERECO.ENDERECOCOMERCIAL;
-		System.out.println(comercial.toString());
+		assertThat(comercial.toString(), containsString("ENDERECOCOMERCIAL"));
 	}
 	
 }

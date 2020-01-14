@@ -10,34 +10,38 @@ import static util.Utilidades.isValid;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 
-import com.google.code.beanmatchers.BeanMatchers;
+import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.Email;
-import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureFuncionario;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
+import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EmailTest.
  */
 public class EmailTest {
-	
-	/** The email func. */
-	private Email emailFunc;
-	
-	/** The funcionario. */
-	private Funcionario funcionario;
-	
-	/**
-	 * Inits the.
-	 */
-	@BeforeClass
-	public static void init() {
+
+    /** The email func. */
+    private Email emailFunc;
+
+    /** The funcionario. */
+    private Funcionario funcionario;
+
+    @Mock
+    private ValueGenerator<Funcionario> funcionarioMock;
+
+    /**
+     * Inits the.
+     */
+    @BeforeClass
+    public static void init() {
 		Utilidades.reconhecerJodaTime();
 		FixtureFuncionario.fakeFuncionario();
 	}
@@ -165,28 +169,24 @@ public class EmailTest {
 	 */
 	@Test
 	public void deve_respeitar_os_gets_sets() {
+	    gerarFuncionario();
 		assertThat(Email.class, hasValidGettersAndSetters());
 	}
 	
 	/**
-	 * Deve respeitar hash code.
+	 * Deve respeitar equals hash code.
 	 */
 	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Email.class, BeanMatchers.hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Email.class, BeanMatchers.hasValidBeanEquals());
-	}
-	
-	@Test
-	public void equals_hashCode() {
+	public void deve_respeitar_equals_hashCode() {
 	    EqualsVerifier.forClass(Email.class).withOnlyTheseFields("email").suppress(Warning.NONFINAL_FIELDS).verify();
 	}
+	
+	public void gerarFuncionario() {
+        registerValueGenerator(new ValueGenerator<Funcionario>() {
+            public Funcionario generate() {
+                return new Funcionario();
+            }
+        }, Funcionario.class);
+    }
 
 }

@@ -5,19 +5,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.DDD;
-import br.com.contmatic.empresa.telefone.FixtureTelefone;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureTelefone;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TelefoneTest.
  */
@@ -286,12 +286,12 @@ public class TelefoneTest {
 		assertThat(Telefone.class, hasValidGettersAndSetters());
 	}
 	
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		fail();
-	}
+    /**
+     * Deve respeitar equals hash code.
+     */
+    @Test
+    public void deve_respeitar_equals_hashCode() {
+        EqualsVerifier.forClass(Telefone.class).withOnlyTheseFields("ddd","numero","ramal").suppress(Warning.NONFINAL_FIELDS).verify();
+    }
 
 }

@@ -3,7 +3,6 @@ package br.com.contmatic.empresa.endereco;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum UFBRASIL.
  */

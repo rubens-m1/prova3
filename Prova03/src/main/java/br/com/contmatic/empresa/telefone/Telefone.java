@@ -7,17 +7,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Telefone.
  */
-public class Telefone {
+public final class Telefone {
 
 	/** The ddd. */
 	@NotNull(message = "ddd nao pode ser nulo, vazio ou conter somente espaços")
@@ -43,7 +42,6 @@ public class Telefone {
 	 * @param ramal the ramal
 	 */
 	public Telefone(DDD ddd, String numero, String ramal) {
-		super();
 		this.ddd = ddd;
 		this.numero = numero;
 		this.ramal = ramal;
@@ -54,7 +52,6 @@ public class Telefone {
 	 * Instantiates a new telefone.
 	 */
 	public Telefone() {
-		super();
 	}
 
 	/**
@@ -118,7 +115,7 @@ public class Telefone {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -132,8 +129,8 @@ public class Telefone {
 		}
 
 		Telefone telefone = (Telefone) obj;
-		return new EqualsBuilder().append(numero, telefone.getNumero())
-				.append(ramal, telefone.getRamal()).isEquals();
+		return new EqualsBuilder().append(ddd, telefone.ddd).append(numero, telefone.numero)
+				.append(ramal, telefone.ramal).isEquals();
 
 	}
 
@@ -143,8 +140,8 @@ public class Telefone {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getDdd()).append(getNumero()).append(getRamal()).hashCode();
+	public final int hashCode() {
+		return new HashCodeBuilder().append(ddd).append(numero).append(ramal).hashCode();
 	}
 
 	/**

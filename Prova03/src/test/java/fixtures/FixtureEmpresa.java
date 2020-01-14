@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package fixtures;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
@@ -6,6 +6,9 @@ import java.util.Random;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import br.com.contmatic.empresa.Email;
+import br.com.contmatic.empresa.Empresa;
+import br.com.contmatic.empresa.SitesEmpresa;
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;

@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa.funcionario;
+package fixtures;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
@@ -11,6 +11,7 @@ import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 import br.com.contmatic.empresa.endereco.UFBRASIL;
+import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
@@ -70,7 +71,6 @@ public class FixtureFuncionario {
 			add("ramal", "");
 		}});
 	}
-	
 	
 }
 
