@@ -7,7 +7,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static util.Utilidades.isValid;
 
 import java.util.HashSet;
@@ -18,20 +17,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.code.beanmatchers.BeanMatchers;
-
 import br.com.contmatic.empresa.Email;
 import br.com.contmatic.empresa.Empresa;
-import br.com.contmatic.empresa.FixtureEmpresa;
 import br.com.contmatic.empresa.SitesEmpresa;
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureEmpresa;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EmpresaTest.
  */
@@ -109,8 +107,7 @@ public class EmpresaTest {
 	 */
 	@Test
 	public void deve_aceitar_empresa_valida() {
-		System.out.println(empresa);
-		fail();
+		assertTrue(isValid(empresa, empresa.toString()));
 	}
 	
 	/**
@@ -128,7 +125,7 @@ public class EmpresaTest {
 	@Test
 	public void nao_deve_aceitar_empresa_com_cnpj_nulo() {
 		empresa.setCnpj(null);
-		assertFalse(isValid(empresa, "CNPJ não pode ser nulo"));
+		assertFalse(isValid(empresa, "CNPJ nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 	
 	/**
@@ -263,7 +260,7 @@ public class EmpresaTest {
 	@Test
 	public void nao_deve_aceitar_empresa_com_razao_social_nula() {
 		empresa.setRazaoSocial(null);
-		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazio ou nula"));
+		assertFalse(isValid(empresa, "Razão social não pode conter apenas espacos, estar vazia ou nula"));
 	}
 	
 	/**
@@ -878,19 +875,11 @@ public class EmpresaTest {
 	}
 	
 	/**
-	 * Deve respeitar hash code.
+	 * Deve respeitar equals hash code.
 	 */
 	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Empresa.class, BeanMatchers.hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Empresa.class, BeanMatchers.hasValidBeanEquals());
+	public void deve_respeitar_equals_hashCode() {
+	    EqualsVerifier.forClass(Empresa.class).withOnlyTheseFields("cnpj").suppress(Warning.NONFINAL_FIELDS).verify();
 	}
 
 }

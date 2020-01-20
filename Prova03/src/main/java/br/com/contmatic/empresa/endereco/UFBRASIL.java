@@ -3,7 +3,6 @@ package br.com.contmatic.empresa.endereco;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum UFBRASIL.
  */
@@ -117,30 +116,12 @@ public enum UFBRASIL {
 	}
 
 	/**
-	 * Sets the uf.
-	 *
-	 * @param uf the new uf
-	 */
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	/**
 	 * Gets the regiao.
 	 *
 	 * @return the regiao
 	 */
 	public String getRegiao() {
 		return regiao;
-	}
-
-	/**
-	 * Sets the regiao.
-	 *
-	 * @param regiao the new regiao
-	 */
-	public void setRegiao(String regiao) {
-		this.regiao = regiao;
 	}
 	
 	/**
@@ -152,7 +133,5 @@ public enum UFBRASIL {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
 	}
-
-	
 	
 }

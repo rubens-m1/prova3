@@ -5,15 +5,14 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Bairro.
  */
-public class Bairro {
+public final class Bairro {
 
 	/** The bairro. */
 	@NotBlank(message = "Bairro nao pode ser nulo")
@@ -53,7 +52,7 @@ public class Bairro {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -76,7 +75,7 @@ public class Bairro {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(bairro).hashCode();
 	}
 	

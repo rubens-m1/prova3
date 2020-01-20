@@ -4,7 +4,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum DDD.
  */
@@ -240,30 +239,12 @@ public enum DDD{
 	}
 
 	/**
-	 * Sets the regiao.
-	 *
-	 * @param regiao the new regiao
-	 */
-	public void setRegiao(String regiao) {
-		this.regiao = regiao;
-	}
-
-	/**
 	 * Gets the ddd.
 	 *
 	 * @return the ddd
 	 */
 	public String getDdd() {
 		return ddd;
-	}
-
-	/**
-	 * Sets the ddd.
-	 *
-	 * @param ddd the new ddd
-	 */
-	public void setDdd(String ddd) {
-		this.ddd = ddd;
 	}
 
 	/**

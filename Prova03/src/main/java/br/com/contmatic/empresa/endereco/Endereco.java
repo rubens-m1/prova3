@@ -9,17 +9,16 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Endereco.
  */
-public class Endereco {
+public final class Endereco {
 
 	/** The logradouro. */
 	@Pattern(regexp = ExpressoesRegulares.ALFANUMERICO_COM_ESPAÇO_Ç_E_ACENTOS, message = "Caractere invalido")
@@ -193,7 +192,7 @@ public class Endereco {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -207,7 +206,7 @@ public class Endereco {
 		}
 
 		Endereco endereco = (Endereco) obj;
-		return new EqualsBuilder().append(numero, endereco.getNumero()).append(cep, endereco.getCep()).isEquals();
+		return new EqualsBuilder().append(numero, endereco.numero).append(cep, endereco.cep).isEquals();
 	}
 
 	/**
@@ -216,8 +215,8 @@ public class Endereco {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getNumero()).append(getCep()).hashCode();
+	public final int hashCode() {
+		return new HashCodeBuilder().append(numero).append(cep).hashCode();
 	}
 
 	/**

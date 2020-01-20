@@ -1,15 +1,15 @@
 package telefonetest;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.DDD;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DddTest.
  */
@@ -19,9 +19,9 @@ public class DddTest {
 	 * Deve imprimir to string.
 	 */
 	@Test
-	public void deve_imprimir_to_string() {
+	public void deve_conter_to_string() {
 		DDD ddd = DDD.DDD11;
-		System.out.println(ddd.toString());
+		assertThat(ddd.toString(), containsString("São Paulo – SP,11,DDD11,0"));
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_valor_diferente_do_valor_esperao() {
 		DDD ddd = DDD.DDD13;
-		assertTrue(ddd.getDdd() != ("14"));
+		assertNotEquals(("14"), ddd.getDdd());
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_valor_diferente_do_esperado_da_regiao() {
 		DDD ddd = DDD.DDD15;
-		assertTrue(ddd.getRegiao() != ("Bauru – SP"));
+		assertNotEquals(("Bauru – SP"), ddd.getRegiao());
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_ddd_nulo() {
 		DDD ddd = DDD.DDD16;
-		assertTrue(ddd.getDdd() != null);
+		assertNotNull(ddd.getDdd());
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_regiao_nula() {
 		DDD ddd = DDD.DDD17;
-		assertTrue(ddd.getRegiao() != null);
+		assertNotNull(ddd.getRegiao());
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_comprimento_menor_que_2_em_ddd() {
 		DDD ddd = DDD.DDD19;
-		assertFalse(String.valueOf(ddd.getDdd()).length()<2);
+		assertNotEquals(1, String.valueOf(ddd.getDdd()).length());
 	}
 	
 	/**
@@ -102,25 +102,7 @@ public class DddTest {
 	@Test
 	public void nao_deve_aceitar_comprimento_maior_que_2_em_ddd() {
 		DDD ddd = DDD.DDD21;
-		assertFalse(String.valueOf(ddd.getDdd()).length()>2);
-	}
-	
-	/**
-	 * Nao deve aceitar ddd vazio.
-	 */
-	@Test
-	public void nao_deve_aceitar_ddd_vazio() {
-		DDD ddd = DDD.DDD22;
-		assertTrue(ddd.getDdd() != "");
-	}
-
-	/**
-	 * Nao deve aceitar regiao vazia.
-	 */
-	@Test 
-	public void nao_deve_aceitar_regiao_vazia() {
-		DDD ddd = DDD.DDD24;
-		assertTrue(ddd.getRegiao() != "");
+		assertNotEquals(3, String.valueOf(ddd.getDdd()).length());
 	}
 
 }

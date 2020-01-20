@@ -2,8 +2,8 @@ package br.com.contmatic.empresa.endereco;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.hibernate.validator.constraints.NotBlank;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum TIPODEENDERECO.
  */
@@ -13,9 +13,10 @@ public enum TIPODEENDERECO {
 	ENDERECORESIDENCIAL("Endereco Residencial"),
 	
 	/** The enderecocomercial. */
-	ENDERECOCOMERCIAL("Endereci Comercial");
+	ENDERECOCOMERCIAL("Endereco Comercial");
 	
 	/** The tipo. */
+    @NotBlank(message = "Tipo de Endereco nao pode ser nulo")
 	private String tipo;
 	
 	/**
@@ -24,6 +25,7 @@ public enum TIPODEENDERECO {
 	 * @param tipo the tipo
 	 */
 	private TIPODEENDERECO(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	/**
@@ -39,15 +41,6 @@ public enum TIPODEENDERECO {
 	 */
 	public String getTipo() {
 		return tipo;
-	}
-	
-	/**
-	 * Sets the tipo.
-	 *
-	 * @param tipo the new tipo
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 	
 	/**

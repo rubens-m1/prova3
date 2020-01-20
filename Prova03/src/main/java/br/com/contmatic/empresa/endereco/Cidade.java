@@ -15,11 +15,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.util.ExpressoesRegulares;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Cidade.
  */
-public class Cidade {
+public final class Cidade {
 
 	/** The bairro. */
 	@Valid
@@ -41,7 +40,6 @@ public class Cidade {
 	 * Instantiates a new cidade.
 	 */
 	public Cidade() {
-		super();
 	}
 
 	/**
@@ -105,7 +103,7 @@ public class Cidade {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -119,7 +117,7 @@ public class Cidade {
 		}
 		
 		Cidade cidade = (Cidade) obj;
-		return new EqualsBuilder().append(nomeCidade, cidade.nomeCidade).isEquals();
+		return new EqualsBuilder().append(nomeCidade, cidade.nomeCidade).append(uf, cidade.uf).append(bairro, cidade.bairro).isEquals();
 	}
 
 	/**
@@ -128,7 +126,7 @@ public class Cidade {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(nomeCidade).append(uf).append(bairro).hashCode();
 	}
 	

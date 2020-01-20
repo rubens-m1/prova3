@@ -1,7 +1,5 @@
 package empresatest;
 
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
@@ -13,9 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.SitesEmpresa;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SitesEmpresaTest.
  */
@@ -130,20 +129,12 @@ public class SitesEmpresaTest {
 		assertThat(SitesEmpresa.class, hasValidGettersAndSetters());
 	}
 
-	/**
-	 * Deve respeitar hash code.
-	 */
-	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(SitesEmpresa.class, hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(SitesEmpresa.class, hasValidBeanEquals());
-	}
+    /**
+     * Deve respeitar equals hash code.
+     */
+    @Test
+    public void deve_respeitar_equals_hashCode() {
+        EqualsVerifier.forClass(SitesEmpresa.class).withOnlyTheseFields("url").suppress(Warning.NONFINAL_FIELDS).verify();
+    }
 
 }

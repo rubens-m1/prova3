@@ -6,21 +6,20 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.contmatic.empresa.funcionario.Funcionario;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Email.
  */
-public class Email {
+public final class Email {
 
 	/** The funcionario. */
-	@NotNull(message = "Funcionario nao pode ser nulo")
 	@Valid
+	@NotNull(message = "Funcionario nao pode ser nulo")
 	private Funcionario funcionario;
 
 	/** The email. */
@@ -33,20 +32,6 @@ public class Email {
 	 * Instantiates a new email.
 	 */
 	public Email() {
-		super();
-	}
-
-	/**
-	 * Instantiates a new email.
-	 *
-	 * @param funcionario the funcionario
-	 * @param area the area
-	 * @param email the email
-	 */
-	public Email(Funcionario funcionario, String area, String email) {
-		super();
-		this.funcionario = funcionario;
-		this.email = email;
 	}
 
 	/**
@@ -92,7 +77,7 @@ public class Email {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -105,7 +90,7 @@ public class Email {
 			return false;
 		}
 
-		Email emailsEmpresa = (Email) obj;
+		final Email emailsEmpresa = (Email) obj;
 		return new EqualsBuilder().append(email, emailsEmpresa.email).isEquals();
 	}
 
@@ -115,7 +100,7 @@ public class Email {
 	 * @return the int
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return new HashCodeBuilder().append(email).hashCode();
 	}
 

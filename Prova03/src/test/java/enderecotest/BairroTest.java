@@ -1,6 +1,7 @@
 package enderecotest;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -8,12 +9,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.code.beanmatchers.BeanMatchers;
-
 import br.com.contmatic.empresa.endereco.Bairro;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BairroTest.
  */
@@ -31,7 +31,6 @@ public class BairroTest {
 	@Before
 	public void init() {
 		bairro = new Bairro();
-		
 		bairro1 = new Bairro();
 	}
 	
@@ -86,7 +85,7 @@ public class BairroTest {
 	@Test
 	public void deve_imprimir_tostring_de_bairro() {
 		bairro.setBairro("Tatuapé");
-		System.out.println(bairro.toString());
+		assertThat(bairro.toString(), containsString("Tatuapé"));
 	}
 	
 	/**
@@ -193,20 +192,12 @@ public class BairroTest {
 		assertThat(Bairro.class, hasValidGettersAndSetters());
 	}
 	
-	/**
-	 * Deve respeitar hash code.
-	 */
-	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Bairro.class, BeanMatchers.hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Bairro.class, BeanMatchers.hasValidBeanEquals());
-	}
+    /**
+     * Deve respeitar equals hash code.
+     */
+    @Test
+    public void deve_respeitar_equals_hashCode() {
+        EqualsVerifier.forClass(Bairro.class).withOnlyTheseFields("bairro").suppress(Warning.NONFINAL_FIELDS).verify();
+    }
 
 }

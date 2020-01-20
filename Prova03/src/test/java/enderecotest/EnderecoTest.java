@@ -1,7 +1,9 @@
 package enderecotest;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -13,17 +15,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.code.beanmatchers.BeanMatchers;
+import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
-import br.com.contmatic.empresa.endereco.FixtureEndereco;
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureEndereco;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EnderecoTest.
  */
@@ -72,7 +73,6 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_aceitar_endereco_completo_valido() {
-		System.out.println(endereco);
 		assertTrue(isValid(endereco, endereco.toString()));
 	}
 
@@ -92,7 +92,6 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_sem_logradouro() {
 		endereco.setLogradouro(null);
-		System.out.println(endereco);
 		assertFalse(Utilidades.isValid(endereco, "Logradouro nao pode conter apenas espacos, estar vazio ou nulo"));
 	}
 
@@ -533,7 +532,6 @@ public class EnderecoTest {
 	@Test
 	public void deve_aceitar_endereco_com_tamanho_maximo_no_complemento() {
 		endereco.setComplemento(randomAlphanumeric(100));
-		System.out.println(endereco.getComplemento());
 		assertThat(String.valueOf(endereco.getComplemento()).length(), is(100));
 	}
 	
@@ -543,7 +541,6 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_endereco_com_complemento_maior_que_o_tamanho_maximo() {
 		endereco.setComplemento(randomAlphanumeric(101));
-		System.out.println(endereco.getComplemento());
 		assertFalse(Utilidades.isValid(endereco, "Logradouro deve conter no maximo 100 caracteres"));
 	}
 	
@@ -612,7 +609,6 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_endereco_com_bairro_com_caracteres_especiais() {
 		bairro.setBairro("!@#$%");
 		endereco.setBairro(bairro);
-		System.out.println(endereco.getBairro());
 		assertFalse(Utilidades.isValid(endereco, "Nome de bairro invalido"));
 	}
 
@@ -762,11 +758,11 @@ public class EnderecoTest {
 	}
 	
 	/**
-	 * Deve fazer to string de endereco.
+	 * Deve fazer to string correto de endereco.
 	 */
 	@Test
-	public void deve_fazer_to_string_de_endereco() {
-		System.out.println(endereco.toString());
+	public void deve_fazer_to_string_correto_de_endereco() {
+		assertThat(endereco.toString(), containsString(endereco.toString()));
 	}
 	
 	/**
@@ -774,23 +770,25 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_respeitar_os_gets_sets() {
+	    gerarBairro();
+	    gerarCidade();
 		assertThat(Endereco.class, hasValidGettersAndSetters());
 	}
-
-	/**
-	 * Deve respeitar hash code.
-	 */
-	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Endereco.class, BeanMatchers.hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Endereco.class, BeanMatchers.hasValidBeanEquals());
-	}
+	
+	   public void gerarBairro() {
+	        registerValueGenerator(new ValueGenerator<Bairro>() {
+	            public Bairro generate() {
+	                return new Bairro();
+	            }
+	        }, Bairro.class);
+	    }
+	   
+       public void gerarCidade() {
+           registerValueGenerator(new ValueGenerator<Cidade>() {
+               public Cidade generate() {
+                   return new Cidade();
+               }
+           }, Cidade.class);
+       }
 	
 }

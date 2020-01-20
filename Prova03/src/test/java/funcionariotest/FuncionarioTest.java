@@ -1,5 +1,7 @@
 package funcionariotest;
 
+import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -14,15 +16,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.code.beanmatchers.BeanMatchers;
+import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.endereco.Endereco;
-import br.com.contmatic.empresa.funcionario.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureFuncionario;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FuncionarioTest.
  */
@@ -71,7 +75,8 @@ public class FuncionarioTest {
 	 */
 	@Test
 	public void deve_aceitar_funcionario_valido() {
-		System.out.println(funcionario);
+	    funcionario.setPrimeiroNome("João");
+		assertThat(funcionario.toString(), containsString("João"));;
 	}
 	
 	/**
@@ -623,7 +628,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_menor_que_o_salario_minimo() {
 		funcionario.setSalario(997.00);
-		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser maior ou igual a 998"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser entre R$998,00 e R$999999999,00"));
 	}
 	
 	/**
@@ -632,7 +637,7 @@ public class FuncionarioTest {
 	@Test
 	public void nao_deve_aceitar_funcionario_com_salario_maior_que_o_salario_maximo() {
 		funcionario.setSalario(1000000000.00);
-		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser menor ou igual a 999999999"));
+		assertFalse(Utilidades.isValid(funcionario, "O valor do salario deve ser entre R$998,00 e R$999999999,00"));
 	}
 	
 	/**
@@ -813,7 +818,7 @@ public class FuncionarioTest {
 	 */
 	@Test
 	public void deve_fazer_to_string_de_funcionario() {
-		System.out.println(funcionario.toString());
+		assertThat(funcionario.toString(), containsString(funcionario.toString()));
 	}
 	
 	/**
@@ -821,25 +826,27 @@ public class FuncionarioTest {
 	 */
 	@Test
 	public void deve_respeitar_os_gets_sets() {
+	    gerarEndereco();
 		assertThat(Funcionario.class, BeanMatchers.hasValidGettersAndSetters());
 	}
 
-	/**
-	 * Deve respeitar hash code.
-	 */
-	@Test
-	public void deve_respeitar_hash_code() {
-		assertThat(Funcionario.class, BeanMatchers.hasValidBeanHashCode());
-	}
-
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		assertThat(Funcionario.class, BeanMatchers.hasValidBeanEquals());
-	}
+    /**
+     * Deve respeitar equals hash code.
+     */
+    @Test
+    public void deve_respeitar_equals_hashCode() {
+        EqualsVerifier.forClass(Funcionario.class).withOnlyTheseFields("cpf").suppress(Warning.NONFINAL_FIELDS).verify();
+    }
+    
+    /**
+     * Gerar endereco.
+     */
+    public void gerarEndereco() {
+        registerValueGenerator(new ValueGenerator<Endereco>() {
+            public Endereco generate() {
+                return new Endereco();
+            }
+        }, Endereco.class);
+    }
 	
-
-
 }

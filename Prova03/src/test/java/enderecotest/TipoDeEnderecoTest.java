@@ -1,15 +1,16 @@
 package enderecotest;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TipoDeEnderecoTest.
  */
@@ -21,7 +22,7 @@ public class TipoDeEnderecoTest {
 	@Test
 	public void deve_aceitar_tipo_residencial_valido() {
 		TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
-		assertTrue(residencial.name().equals(TIPODEENDERECO.ENDERECORESIDENCIAL.name()));
+		assertThat(residencial.getTipo(), is("Endereco Residencial"));
 	}
 	
 	/**
@@ -31,17 +32,6 @@ public class TipoDeEnderecoTest {
 	public void nao_deve_aceitar_tipo_residecial_diferente_do_especificado() {
 		TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
 		assertNotEquals(TIPODEENDERECO.ENDERECOCOMERCIAL.name(), residencial.name());
-	}
-	
-	/**
-	 * Nao deve aceitar tipo residencial nulo.
-	 */
-	@Test
-	public void nao_deve_aceitar_tipo_residencial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
 	}
 	
 	/**
@@ -72,23 +62,12 @@ public class TipoDeEnderecoTest {
 	}
 	
 	/**
-	 * Nao deve aceitar tipo comercial nulo.
-	 */
-	@Test
-	public void nao_deve_aceitar_tipo_comercial_nulo() {
-		fail();
-//		TIPODEENDERECO residencial = null;
-//		residencial.setTipo(null);
-//		assertFalse(isValid(residencial, "Tipo de Endereco nao pode ser nulo"));
-	}
-	
-	/**
 	 * Deve imprimir tostring para tipo residencial.
 	 */
 	@Test
 	public void deve_imprimir_tostring_para_tipo_residencial() {
 		TIPODEENDERECO residencial = TIPODEENDERECO.ENDERECORESIDENCIAL;
-		System.out.println(residencial.toString());
+		assertThat(residencial.toString(), containsString("ENDERECORESIDENCIAL"));
 	}
 	
 	/**
@@ -97,7 +76,7 @@ public class TipoDeEnderecoTest {
 	@Test
 	public void deve_imprimir_tostring_para_tipo_comercial() {
 		TIPODEENDERECO comercial = TIPODEENDERECO.ENDERECOCOMERCIAL;
-		System.out.println(comercial.toString());
+		assertThat(comercial.toString(), containsString("ENDERECOCOMERCIAL"));
 	}
 	
 }

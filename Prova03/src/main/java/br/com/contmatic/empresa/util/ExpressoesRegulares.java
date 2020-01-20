@@ -1,6 +1,5 @@
 package br.com.contmatic.empresa.util;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ExpressoesRegulares.
  */

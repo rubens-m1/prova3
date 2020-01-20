@@ -5,19 +5,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.telefone.DDD;
-import br.com.contmatic.empresa.telefone.FixtureTelefone;
 import br.com.contmatic.empresa.telefone.Telefone;
 import br.com.six2six.fixturefactory.Fixture;
+import fixtures.FixtureTelefone;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import util.Utilidades;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TelefoneTest.
  */
@@ -41,6 +41,15 @@ public class TelefoneTest {
 	public void init2() {
 		telefone = Fixture.from(Telefone.class).gimme("valido");
 	}
+	
+	/**
+	 * Deve aceitar ddd valido esperado.
+	 */
+	@Test
+	public void deve_aceitar_telefone_completo_valido_esperado() {
+		telefone.setDdd(DDD.DDD11);
+		assertTrue(telefone.getDdd().equals(DDD.DDD11));
+	}
 
 	/**
 	 * Nao deve aceitar telefone com ddd nulo.
@@ -58,7 +67,7 @@ public class TelefoneTest {
 	public void deve_aceitar_ddd_valido_esperado() {
 		telefone.setDdd(DDD.DDD11);
 		assertTrue(telefone.getDdd().equals(DDD.DDD11));
-	} 
+	}
 
 	/**
 	 * Nao deve aceitar ddd valido diferente do esperado.
@@ -286,12 +295,12 @@ public class TelefoneTest {
 		assertThat(Telefone.class, hasValidGettersAndSetters());
 	}
 	
-	/**
-	 * Deve respeitar equals.
-	 */
-	@Test
-	public void deve_respeitar_equals() {
-		fail();
-	}
+    /**
+     * Deve respeitar equals hash code.
+     */
+    @Test
+    public void deve_respeitar_equals_hashCode() {
+        EqualsVerifier.forClass(Telefone.class).withOnlyTheseFields("ddd","numero","ramal").suppress(Warning.NONFINAL_FIELDS).verify();
+    }
 
 }
