@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.enderecotest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;

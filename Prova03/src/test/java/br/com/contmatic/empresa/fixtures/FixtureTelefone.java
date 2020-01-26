@@ -1,4 +1,4 @@
-package fixtures;
+package br.com.contmatic.empresa.fixtures;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package funcionariotest;
+package br.com.contmatic.empresa.funcionariotest;
 
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -19,13 +19,13 @@ import com.google.code.beanmatchers.BeanMatchers;
 import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.endereco.Endereco;
+import br.com.contmatic.empresa.fixtures.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.Telefone;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureFuncionario;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
 
 /**
  * The Class FuncionarioTest.

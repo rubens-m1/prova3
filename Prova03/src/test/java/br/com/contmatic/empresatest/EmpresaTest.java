@@ -1,5 +1,6 @@
-package empresatest;
+package br.com.contmatic.empresatest;
 
+import static br.com.contmatic.empresa.utiltest.Utilidades.isValid;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -7,7 +8,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static util.Utilidades.isValid;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,14 +21,14 @@ import br.com.contmatic.empresa.Email;
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.SitesEmpresa;
 import br.com.contmatic.empresa.endereco.Endereco;
+import br.com.contmatic.empresa.fixtures.FixtureEmpresa;
 import br.com.contmatic.empresa.funcionario.Funcionario;
 import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureEmpresa;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
 
 /**
  * The Class EmpresaTest.

@@ -1,5 +1,6 @@
-package enderecotest;
+package br.com.contmatic.empresa.enderecotest;
 
+import static br.com.contmatic.empresa.utiltest.Utilidades.isValid;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
@@ -9,7 +10,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static util.Utilidades.isValid;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -21,9 +21,9 @@ import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.Endereco;
 import br.com.contmatic.empresa.endereco.TIPODEENDERECO;
+import br.com.contmatic.empresa.fixtures.FixtureEndereco;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureEndereco;
-import util.Utilidades;
 
 /**
  * The Class EnderecoTest.

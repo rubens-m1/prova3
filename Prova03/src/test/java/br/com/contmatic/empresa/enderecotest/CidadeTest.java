@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.enderecotest;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -16,11 +16,11 @@ import org.junit.Test;
 import br.com.contmatic.empresa.endereco.Bairro;
 import br.com.contmatic.empresa.endereco.Cidade;
 import br.com.contmatic.empresa.endereco.UFBRASIL;
+import br.com.contmatic.empresa.fixtures.FixtureCidade;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureCidade;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
 
 /**
  * The Class CidadeTest.

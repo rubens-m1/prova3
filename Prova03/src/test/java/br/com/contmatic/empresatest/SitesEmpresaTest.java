@@ -1,4 +1,4 @@
-package empresatest;
+package br.com.contmatic.empresatest;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.SitesEmpresa;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
 
 /**
  * The Class SitesEmpresaTest.

@@ -1,4 +1,4 @@
-package telefonetest;
+package br.com.contmatic.empresa.telefonetest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;

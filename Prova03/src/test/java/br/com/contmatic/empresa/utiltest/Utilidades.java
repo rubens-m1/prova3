@@ -1,4 +1,4 @@
-package util;
+package br.com.contmatic.empresa.utiltest;
 
 import java.util.Set;
 

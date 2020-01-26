@@ -1,4 +1,4 @@
-package enderecotest;
+package br.com.contmatic.empresa.enderecotest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,7 +13,7 @@ import br.com.contmatic.empresa.endereco.UFBRASIL;
 /**
  * The Class UfTest.
  */
-public class UfTest {
+public class UfBrasilTest {
 	
 	/**
 	 * Nao deve aceitar uf nula.

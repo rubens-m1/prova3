@@ -1,4 +1,4 @@
-package fixtures;
+package br.com.contmatic.empresa.fixtures;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.apache.commons.lang3.RandomStringUtils.randomAscii;

@@ -1,4 +1,4 @@
-package telefonetest;
+package br.com.contmatic.empresa.telefonetest;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.is;
@@ -10,13 +10,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.contmatic.empresa.fixtures.FixtureTelefone;
 import br.com.contmatic.empresa.telefone.DDD;
 import br.com.contmatic.empresa.telefone.Telefone;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureTelefone;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
 
 /**
  * The Class TelefoneTest.

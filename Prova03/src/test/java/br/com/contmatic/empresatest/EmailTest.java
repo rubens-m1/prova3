@@ -1,11 +1,11 @@
-package empresatest;
+package br.com.contmatic.empresatest;
 
+import static br.com.contmatic.empresa.utiltest.Utilidades.isValid;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static util.Utilidades.isValid;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,12 +15,13 @@ import org.mockito.Mock;
 import com.google.code.beanmatchers.ValueGenerator;
 
 import br.com.contmatic.empresa.Email;
+import br.com.contmatic.empresa.fixtures.FixtureFuncionario;
 import br.com.contmatic.empresa.funcionario.Funcionario;
+import br.com.contmatic.empresa.utiltest.Utilidades;
 import br.com.six2six.fixturefactory.Fixture;
-import fixtures.FixtureFuncionario;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import util.Utilidades;
+
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 
 /**
